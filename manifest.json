@@ -1,6 +1,6 @@
 {
-    "name": "Financial Calculator",
-    "short_name": "Finance Calc",
+    "name": "Finance App by Surendra",
+    "short_name": "Finance App",
     "description": "Interest, FD, RD and EMI Calculator",
     "start_url": "./index.html",
     "scope": "./",

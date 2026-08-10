@@ -1,0 +1,17 @@
+{
+    "name": "Financial Calculator",
+    "short_name": "Finance Calc",
+    "description": "Interest, FD, RD and EMI Calculator",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#f4f6f8",
+    "theme_color": "#007bff",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}

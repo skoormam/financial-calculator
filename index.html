@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Financial Calculator</title>
+
+    <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#007bff">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style"
+      content="default">
+
+<meta name="apple-mobile-web-app-title"
+      content="Financial Calculator">
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- ========================= -->
+        <!-- CALCULATOR TABS -->
+        <!-- ========================= -->
+
+        <div class="calculator-tabs">
+
+            <button
+                type="button"
+                onclick="showCalculator('interest')">
+                Interest
+            </button>
+
+            <button
+                type="button"
+                onclick="showCalculator('fd')">
+                FD
+            </button>
+
+            <button
+                type="button"
+                onclick="showCalculator('rd')">
+                RD
+            </button>
+
+            <button
+                type="button"
+                onclick="showCalculator('emi')">
+                EMI
+            </button>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- INTEREST CALCULATOR -->
+        <!-- ========================= -->
+
+        <div
+            id="interestCalculator"
+            class="calculator-section">
+
+            <h1>Interest Calculator</h1>
+
+            <p class="subtitle">
+                Calculate Simple & Compound Interest
+            </p>
+
+
+            <div class="form-group">
+
+                <label for="principal">
+                    Principal Amount (₹)
+                </label>
+
+                <input
+                    type="number"
+                    id="principal"
+                    placeholder="Enter amount"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="rate">
+                    Interest Rate (%)
+                </label>
+
+                <input
+                    type="number"
+                    id="rate"
+                    placeholder="Enter interest rate"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="time">
+                    Period
+                </label>
+
+                <div class="time-input">
+
+                    <input
+                        type="number"
+                        id="time"
+                        placeholder="Enter period"
+                        min="0"
+                        step="0.01">
+
+                    <select id="timeUnit">
+
+                        <option value="years">
+                            Years
+                        </option>
+
+                        <option value="months">
+                            Months
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="interestType">
+                    Interest Type
+                </label>
+
+                <select id="interestType">
+
+                    <option value="simple">
+                        Simple Interest
+                    </option>
+
+                    <option value="compound">
+                        Compound Interest
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="compoundFrequency">
+                    Compounding Frequency
+                </label>
+
+                <select id="compoundFrequency">
+
+                    <option value="1">
+                        Annually
+                    </option>
+
+                    <option value="2">
+                        Half-Yearly
+                    </option>
+
+                    <option value="4">
+                        Quarterly
+                    </option>
+
+                    <option value="12">
+                        Monthly
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="calculateInterest()">
+                Calculate
+            </button>
+
+
+            <div class="result">
+
+                <h2>Result</h2>
+
+                <p>
+                    Interest:
+                    <strong id="interestResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+                <p>
+                    Total Amount:
+                    <strong id="totalResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- FD CALCULATOR -->
+        <!-- ========================= -->
+
+        <div
+            id="fdCalculator"
+            class="calculator-section"
+            style="display: none;">
+
+            <h1>FD Calculator</h1>
+
+            <p class="subtitle">
+                Calculate Fixed Deposit maturity amount
+            </p>
+
+
+            <div class="form-group">
+
+                <label for="fdPrincipal">
+                    Deposit Amount (₹)
+                </label>
+
+                <input
+                    type="number"
+                    id="fdPrincipal"
+                    placeholder="Enter deposit amount"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="fdRate">
+                    Interest Rate (% per year)
+                </label>
+
+                <input
+                    type="number"
+                    id="fdRate"
+                    placeholder="Enter interest rate"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="fdTime">
+                    Period (Years)
+                </label>
+
+                <input
+                    type="number"
+                    id="fdTime"
+                    placeholder="Enter period"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="fdFrequency">
+                    Compounding Frequency
+                </label>
+
+                <select id="fdFrequency">
+
+                    <option value="1">
+                        Annually
+                    </option>
+
+                    <option value="2">
+                        Half-Yearly
+                    </option>
+
+                    <option value="4">
+                        Quarterly
+                    </option>
+
+                    <option value="12">
+                        Monthly
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="calculateFD()">
+                Calculate FD
+            </button>
+
+
+            <div class="result">
+
+                <h2>FD Result</h2>
+
+                <p>
+                    Interest Earned:
+                    <strong id="fdInterestResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+                <p>
+                    Maturity Amount:
+                    <strong id="fdTotalResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- RD CALCULATOR -->
+        <!-- ========================= -->
+
+        <div
+            id="rdCalculator"
+            class="calculator-section"
+            style="display: none;">
+
+            <h1>RD Calculator</h1>
+
+            <p class="subtitle">
+                Calculate Recurring Deposit maturity amount
+            </p>
+
+
+            <div class="form-group">
+
+                <label for="rdMonthlyDeposit">
+                    Monthly Deposit (₹)
+                </label>
+
+                <input
+                    type="number"
+                    id="rdMonthlyDeposit"
+                    placeholder="Enter monthly deposit"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="rdRate">
+                    Interest Rate (% per year)
+                </label>
+
+                <input
+                    type="number"
+                    id="rdRate"
+                    placeholder="Enter interest rate"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="rdTime">
+                    Period (Years)
+                </label>
+
+                <input
+                    type="number"
+                    id="rdTime"
+                    placeholder="Enter period"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="calculateRD()">
+                Calculate RD
+            </button>
+
+
+            <div class="result">
+
+                <h2>RD Result</h2>
+
+                <p>
+                    Total Deposited:
+                    <strong id="rdDepositedResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+                <p>
+                    Interest Earned:
+                    <strong id="rdInterestResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+                <p>
+                    Maturity Amount:
+                    <strong id="rdTotalResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- EMI CALCULATOR -->
+        <!-- ========================= -->
+
+        <div
+            id="emiCalculator"
+            class="calculator-section"
+            style="display: none;">
+
+            <h1>EMI Calculator</h1>
+
+            <p class="subtitle">
+                Calculate your monthly loan EMI
+            </p>
+
+
+            <div class="form-group">
+
+                <label for="loanAmount">
+                    Loan Amount (₹)
+                </label>
+
+                <input
+                    type="number"
+                    id="loanAmount"
+                    placeholder="Enter loan amount"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="loanRate">
+                    Interest Rate (% per year)
+                </label>
+
+                <input
+                    type="number"
+                    id="loanRate"
+                    placeholder="Enter annual interest rate"
+                    min="0"
+                    step="0.01">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="loanTenure">
+                    Loan Tenure
+                </label>
+
+                <div class="time-input">
+
+                    <input
+                        type="number"
+                        id="loanTenure"
+                        placeholder="Enter tenure"
+                        min="0"
+                        step="1">
+
+                    <select id="loanTenureUnit">
+
+                        <option value="years">
+                            Years
+                        </option>
+
+                        <option value="months">
+                            Months
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                onclick="calculateEMI()">
+                Calculate EMI
+            </button>
+
+
+            <div class="result">
+
+                <h2>EMI Result</h2>
+
+                <p>
+                    Monthly EMI:
+                    <strong id="emiResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+                <p>
+                    Total Interest:
+                    <strong id="emiInterestResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+                <p>
+                    Total Payment:
+                    <strong id="emiTotalResult">
+                        ₹0.00
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <script src="script.js"></script>
+<script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+            navigator.serviceWorker.register("service-worker.js")
+                .then(function () {
+                    console.log("Service Worker registered");
+                })
+                .catch(function (error) {
+                    console.log(
+                        "Service Worker registration failed:",
+                        error
+                    );
+                });
+        });
+    }
+</script>
+
+</body>
+
+</html>

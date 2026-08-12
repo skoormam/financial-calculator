@@ -8,77 +8,120 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
+    <meta name="theme-color"
+          content="#2563eb">
+
     <title>Finance App by Surendra</title>
 
-    <link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
+    <link rel="stylesheet"
+          href="style.css">
 
-<meta name="theme-color" content="#007bff">
-
-<meta name="mobile-web-app-capable" content="yes">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-
-<meta name="apple-mobile-web-app-status-bar-style"
-      content="default">
-
-<meta name="apple-mobile-web-app-title"
-      content="Financial Calculator">
+    <link rel="manifest"
+          href="manifest.json">
 
 </head>
 
 
 <body>
 
-    <div class="container">
+    <div class="app-shell">
 
 
-        <!-- ========================= -->
-        <!-- CALCULATOR TABS -->
-        <!-- ========================= -->
+        <!-- HEADER -->
 
-        <div class="calculator-tabs">
+        <header class="app-header">
+
+            <div>
+
+                <h1 class="app-title">
+                    Finance App
+                </h1>
+
+                <p class="app-subtitle">
+                    by Surendra
+                </p>
+
+            </div>
+
+
+            <button
+                id="themeToggle"
+                class="theme-toggle"
+                type="button"
+                aria-label="Toggle dark mode">
+
+                🌙
+
+            </button>
+
+        </header>
+
+
+        <!-- TABS -->
+
+        <nav class="calculator-tabs">
 
             <button
                 type="button"
-                onclick="showCalculator('interest')">
+                class="tab-button active"
+                data-calculator="interest">
+
                 Interest
+
             </button>
+
 
             <button
                 type="button"
-                onclick="showCalculator('fd')">
+                class="tab-button"
+                data-calculator="fd">
+
                 FD
+
             </button>
+
 
             <button
                 type="button"
-                onclick="showCalculator('rd')">
+                class="tab-button"
+                data-calculator="rd">
+
                 RD
+
             </button>
+
 
             <button
                 type="button"
-                onclick="showCalculator('emi')">
+                class="tab-button"
+                data-calculator="emi">
+
                 EMI
+
             </button>
 
-        </div>
+        </nav>
 
 
-        <!-- ========================= -->
+        <!-- ================================= -->
         <!-- INTEREST CALCULATOR -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
-        <div
+        <section
             id="interestCalculator"
-            class="calculator-section">
+            class="calculator-card">
 
-            <h1>Interest Calculator</h1>
+            <div class="calculator-heading">
 
-            <p class="subtitle">
-                Calculate Simple & Compound Interest
-            </p>
+                <h2>
+                    Interest Calculator
+                </h2>
+
+                <p>
+                    Calculate Simple & Compound Interest
+                </p>
+
+            </div>
 
 
             <div class="form-group">
@@ -119,7 +162,7 @@
                     Period
                 </label>
 
-                <div class="time-input">
+                <div class="input-row">
 
                     <input
                         type="number"
@@ -195,50 +238,91 @@
             </div>
 
 
-            <button
-                type="button"
-                onclick="calculateInterest()">
-                Calculate
-            </button>
+            <div class="button-row">
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    onclick="calculateInterest()">
+
+                    Calculate
+
+                </button>
 
 
-            <div class="result">
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="resetCalculator('interest')">
 
-                <h2>Result</h2>
+                    Reset
 
-                <p>
-                    Interest:
-                    <strong id="interestResult">
-                        ₹0.00
-                    </strong>
-                </p>
-
-                <p>
-                    Total Amount:
-                    <strong id="totalResult">
-                        ₹0.00
-                    </strong>
-                </p>
+                </button>
 
             </div>
 
-        </div>
+
+            <div
+                id="interestError"
+                class="error-message">
+            </div>
 
 
-        <!-- ========================= -->
+            <div class="result-card">
+
+                <h3>
+                    Result
+                </h3>
+
+                <div class="result-item">
+
+                    <span>
+                        Interest
+                    </span>
+
+                    <strong id="interestResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Total Amount
+                    </span>
+
+                    <strong id="totalResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================= -->
         <!-- FD CALCULATOR -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
-        <div
+        <section
             id="fdCalculator"
-            class="calculator-section"
-            style="display: none;">
+            class="calculator-card hidden">
 
-            <h1>FD Calculator</h1>
+            <div class="calculator-heading">
 
-            <p class="subtitle">
-                Calculate Fixed Deposit maturity amount
-            </p>
+                <h2>
+                    FD Calculator
+                </h2>
+
+                <p>
+                    Calculate Fixed Deposit maturity
+                </p>
+
+            </div>
 
 
             <div class="form-group">
@@ -318,50 +402,92 @@
             </div>
 
 
-            <button
-                type="button"
-                onclick="calculateFD()">
-                Calculate FD
-            </button>
+            <div class="button-row">
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    onclick="calculateFD()">
+
+                    Calculate FD
+
+                </button>
 
 
-            <div class="result">
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="resetCalculator('fd')">
 
-                <h2>FD Result</h2>
+                    Reset
 
-                <p>
-                    Interest Earned:
-                    <strong id="fdInterestResult">
-                        ₹0.00
-                    </strong>
-                </p>
-
-                <p>
-                    Maturity Amount:
-                    <strong id="fdTotalResult">
-                        ₹0.00
-                    </strong>
-                </p>
+                </button>
 
             </div>
 
-        </div>
+
+            <div
+                id="fdError"
+                class="error-message">
+            </div>
 
 
-        <!-- ========================= -->
+            <div class="result-card">
+
+                <h3>
+                    FD Result
+                </h3>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Interest Earned
+                    </span>
+
+                    <strong id="fdInterestResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Maturity Amount
+                    </span>
+
+                    <strong id="fdTotalResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================= -->
         <!-- RD CALCULATOR -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
-        <div
+        <section
             id="rdCalculator"
-            class="calculator-section"
-            style="display: none;">
+            class="calculator-card hidden">
 
-            <h1>RD Calculator</h1>
+            <div class="calculator-heading">
 
-            <p class="subtitle">
-                Calculate Recurring Deposit maturity amount
-            </p>
+                <h2>
+                    RD Calculator
+                </h2>
+
+                <p>
+                    Calculate Recurring Deposit maturity
+                </p>
+
+            </div>
 
 
             <div class="form-group">
@@ -412,57 +538,105 @@
             </div>
 
 
-            <button
-                type="button"
-                onclick="calculateRD()">
-                Calculate RD
-            </button>
+            <div class="button-row">
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    onclick="calculateRD()">
+
+                    Calculate RD
+
+                </button>
 
 
-            <div class="result">
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="resetCalculator('rd')">
 
-                <h2>RD Result</h2>
+                    Reset
 
-                <p>
-                    Total Deposited:
-                    <strong id="rdDepositedResult">
-                        ₹0.00
-                    </strong>
-                </p>
-
-                <p>
-                    Interest Earned:
-                    <strong id="rdInterestResult">
-                        ₹0.00
-                    </strong>
-                </p>
-
-                <p>
-                    Maturity Amount:
-                    <strong id="rdTotalResult">
-                        ₹0.00
-                    </strong>
-                </p>
+                </button>
 
             </div>
 
-        </div>
+
+            <div
+                id="rdError"
+                class="error-message">
+            </div>
 
 
-        <!-- ========================= -->
+            <div class="result-card">
+
+                <h3>
+                    RD Result
+                </h3>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Total Deposited
+                    </span>
+
+                    <strong id="rdDepositedResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Interest Earned
+                    </span>
+
+                    <strong id="rdInterestResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Maturity Amount
+                    </span>
+
+                    <strong id="rdTotalResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================= -->
         <!-- EMI CALCULATOR -->
-        <!-- ========================= -->
+        <!-- ================================= -->
 
-        <div
+        <section
             id="emiCalculator"
-            class="calculator-section"
-            style="display: none;">
+            class="calculator-card hidden">
 
-            <h1>EMI Calculator</h1>
+            <div class="calculator-heading">
 
-            <p class="subtitle">
-                Calculate your monthly loan EMI
-            </p>
+                <h2>
+                    EMI Calculator
+                </h2>
+
+                <p>
+                    Calculate your monthly loan EMI
+                </p>
+
+            </div>
 
 
             <div class="form-group">
@@ -503,7 +677,7 @@
                     Loan Tenure
                 </label>
 
-                <div class="time-input">
+                <div class="input-row">
 
                     <input
                         type="number"
@@ -529,63 +703,97 @@
             </div>
 
 
-            <button
-                type="button"
-                onclick="calculateEMI()">
-                Calculate EMI
-            </button>
+            <div class="button-row">
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    onclick="calculateEMI()">
+
+                    Calculate EMI
+
+                </button>
 
 
-            <div class="result">
+                <button
+                    type="button"
+                    class="secondary-button"
+                    onclick="resetCalculator('emi')">
 
-                <h2>EMI Result</h2>
+                    Reset
 
-                <p>
-                    Monthly EMI:
-                    <strong id="emiResult">
-                        ₹0.00
-                    </strong>
-                </p>
-
-                <p>
-                    Total Interest:
-                    <strong id="emiInterestResult">
-                        ₹0.00
-                    </strong>
-                </p>
-
-                <p>
-                    Total Payment:
-                    <strong id="emiTotalResult">
-                        ₹0.00
-                    </strong>
-                </p>
+                </button>
 
             </div>
 
-        </div>
+
+            <div
+                id="emiError"
+                class="error-message">
+            </div>
+
+
+            <div class="result-card">
+
+                <h3>
+                    EMI Result
+                </h3>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Monthly EMI
+                    </span>
+
+                    <strong id="emiResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Total Interest
+                    </span>
+
+                    <strong id="emiInterestResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Total Payment
+                    </span>
+
+                    <strong id="emiTotalResult">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer class="app-footer">
+
+            Finance App by Surendra
+
+        </footer>
 
 
     </div>
 
 
     <script src="script.js"></script>
-<script>
-    if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function () {
-            navigator.serviceWorker.register("service-worker.js")
-                .then(function () {
-                    console.log("Service Worker registered");
-                })
-                .catch(function (error) {
-                    console.log(
-                        "Service Worker registration failed:",
-                        error
-                    );
-                });
-        });
-    }
-</script>	
 
 </body>
 

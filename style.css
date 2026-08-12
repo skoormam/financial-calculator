@@ -1,128 +1,1107 @@
+/* =========================================================
+   FINANCE APP - COMPLETE STYLE
+   ========================================================= */
+
 * {
     box-sizing: border-box;
+}
+
+html,
+body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    min-height: 100%;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eef3f8;
+    color: #172033;
+    font-size: 14px;
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   MAIN APP
+   ========================================================= */
+
+body > * {
+    box-sizing: border-box;
+}
+
+.app-container,
+.container,
+.app,
+main {
+    width: 100%;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header,
+.app-header {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 10px 4px 8px;
 
     display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+header h1,
+.app-header h1,
+.app-title {
+    margin: 0;
+    padding: 0;
+
+    font-size: 22px;
+    line-height: 1.2;
+
+    font-weight: 700;
+    color: #111827;
+}
+
+header p,
+.app-header p,
+.app-subtitle {
+    margin: 3px 0 0;
+
+    font-size: 10px;
+    color: #64748b;
+}
+
+/* =========================================================
+   THEME BUTTON
+   ========================================================= */
+
+#themeToggle {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border: 1px solid #d8e1eb;
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
     justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.08);
+
+    padding: 0;
+}
+
+#themeToggle:hover {
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+.tab-container,
+.tabs,
+nav {
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto 8px;
+
+    padding: 3px;
+
+    display: flex;
     align-items: center;
 
-    padding: 20px;
+    gap: 3px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce5ef;
+
+    border-radius: 10px;
 }
 
-.container {
+.tab-button {
+    flex: 1;
+
+    height: 34px;
+
+    border: none !important;
+    border-radius: 7px !important;
+
+    background: transparent !important;
+
+    color: #475569 !important;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding: 0 8px;
+
+    box-shadow: none !important;
+}
+
+.tab-button:hover {
+    background: #eff6ff !important;
+    color: #2563eb !important;
+}
+
+.tab-button.active {
+    background: #2563eb !important;
+    color: #ffffff !important;
+
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.22) !important;
+}
+
+/* =========================================================
+   CALCULATOR CARD
+   ========================================================= */
+
+.calculator-card {
     width: 100%;
-    max-width: 500px;
+    max-width: 760px;
 
-    background: white;
-    padding: 30px;
+    margin: 0 auto;
 
-    border-radius: 12px;
+    padding: 18px;
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+
+    border: 1px solid #dce5ef;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 8px 24px rgba(15, 23, 42, 0.08);
+
+    overflow: hidden;
 }
 
-h1 {
-    text-align: center;
-    margin-bottom: 8px;
+.hidden {
+    display: none !important;
 }
 
-.subtitle {
-    text-align: center;
-    color: #666;
-    margin-bottom: 25px;
+/* =========================================================
+   CALCULATOR TITLE
+   ========================================================= */
+
+.calculator-card h2 {
+    margin: 0 0 4px;
+
+    color: #111827;
+
+    font-size: 18px;
+
+    font-weight: 700;
 }
+
+.calculator-card h3 {
+    margin: 0 0 14px;
+
+    color: #475569;
+
+    font-size: 11px;
+
+    font-weight: 400;
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
 
 .form-group {
-    margin-bottom: 18px;
+    width: 100%;
+    margin-bottom: 11px;
 }
 
-label {
+.form-group label,
+.calculator-card label {
     display: block;
-    margin-bottom: 7px;
-    font-weight: bold;
+
+    margin-bottom: 5px;
+
+    color: #17416e;
+
+    font-size: 11px;
+
+    font-weight: 600;
 }
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
 
 input,
 select {
     width: 100%;
-    padding: 12px;
 
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    height: 39px;
 
-    font-size: 16px;
+    padding: 0 10px;
+
+    border: 1px solid #cfdae7;
+
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 12px;
+
+    outline: none;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 input:focus,
 select:focus {
-    outline: none;
-    border-color: #007bff;
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
 }
 
-.time-input {
-    display: flex;
-    gap: 10px;
+/* =========================================================
+   PERIOD ROW
+   ========================================================= */
+
+.form-row,
+.input-row,
+.period-row {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        135px;
+
+    gap: 8px;
 }
 
-.time-input input {
-    flex: 2;
+/* =========================================================
+   BUTTON AREA
+   ========================================================= */
+
+.button-row,
+.calculate-row,
+.form-buttons {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        135px;
+
+    gap: 8px;
+
+    margin-top: 15px;
 }
 
-.time-input select {
-    flex: 1;
-}
+/* =========================================================
+   ALL CALCULATE BUTTONS
+   ========================================================= */
 
 button {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.calculate-button,
+.calculate-btn,
+button[type="submit"] {
     width: 100%;
+
+    min-height: 39px;
+
+    padding: 0 12px;
+
+    border: none !important;
+
+    border-radius: 7px !important;
+
+    background: #2563eb !important;
+
+    color: #ffffff !important;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: none !important;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+}
+
+.calculate-button:hover,
+.calculate-btn:hover,
+button[type="submit"]:hover {
+    background: #1d4ed8 !important;
+}
+
+.calculate-button:active,
+.calculate-btn:active,
+button[type="submit"]:active {
+    transform: scale(0.99);
+}
+
+/* =========================================================
+   RESET BUTTON
+   ========================================================= */
+
+.reset-button,
+.reset-btn,
+button[type="reset"] {
+    width: 100%;
+
+    min-height: 39px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d7e0ea !important;
+
+    border-radius: 7px !important;
+
+    background: #f1f5f9 !important;
+
+    color: #1f2937 !important;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: none !important;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+}
+
+.reset-button:hover,
+.reset-btn:hover,
+button[type="reset"]:hover {
+    background: #e2e8f0 !important;
+}
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.error-message,
+.error,
+[id$="Error"] {
+    min-height: 15px;
+
+    margin-top: 4px;
+
+    color: #dc2626;
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   RESULT CARD
+   ========================================================= */
+
+.result-card {
+    width: 100%;
+
+    margin-top: 16px;
 
     padding: 13px;
 
-    border: none;
-    border-radius: 6px;
+    background: #eff6ff;
 
-    background: #007bff;
-    color: white;
+    border: 1px solid #d3e1f0;
 
-    font-size: 17px;
-    font-weight: bold;
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.result-card h3 {
+    margin: 0 0 9px;
+
+    color: #0f172a;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   RESULT ROW
+   ========================================================= */
+
+.result-row {
+    width: 100%;
+
+    min-height: 28px;
+
+    padding: 6px 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    border-bottom: 1px solid #dbe6f1;
+}
+
+.result-row:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    color: #64748b;
+
+    font-size: 10px;
+}
+
+.result-value {
+    color: #111827;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+/* =========================================================
+   DIRECT RESULT IDS
+   ========================================================= */
+
+#interestResult,
+#totalResult,
+#fdInterestResult,
+#fdTotalResult,
+#rdDepositedResult,
+#rdInterestResult,
+#rdTotalResult,
+#emiResult,
+#emiInterestResult,
+#emiTotalResult {
+    color: #111827;
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.action-buttons,
+.result-actions,
+.finance-action-buttons {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.action-buttons button,
+.result-actions button,
+.finance-action-buttons button {
+    width: 100%;
+
+    min-height: 36px;
+
+    border-radius: 7px !important;
+
+    font-size: 10px;
+
+    font-weight: 600;
 
     cursor: pointer;
 }
 
-button:hover {
-    background: #0056b3;
+/* Copy */
+
+.copy-results,
+#copyResults {
+    background: #ffffff !important;
+
+    color: #334155 !important;
+
+    border: 1px solid #d7e0ea !important;
 }
 
-.result {
-    margin-top: 25px;
+/* WhatsApp */
 
-    padding: 20px;
+.whatsapp-button,
+#whatsappButton {
+    background: #22c55e !important;
 
-    background: #f0f8ff;
+    color: #ffffff !important;
 
-    border-radius: 8px;
+    border: 1px solid #22c55e !important;
+}
 
+/* Save PDF */
+
+.save-pdf,
+#savePdf {
+    background: #f8fafc !important;
+
+    color: #334155 !important;
+
+    border: 1px solid #64748b !important;
+}
+
+/* =========================================================
+   ANALYSIS
+   ========================================================= */
+
+.analysis-card,
+.analysis-section,
+.interest-analysis {
+    width: 100%;
+
+    margin-top: 14px;
+
+    padding: 13px;
+
+    background: #eff6ff;
+
+    border: 1px solid #d3e1f0;
+
+    border-radius: 10px;
+}
+
+.analysis-card h3,
+.analysis-section h3,
+.interest-analysis h3 {
+    margin: 0 0 9px;
+
+    color: #0f172a;
+
+    font-size: 14px;
+}
+
+/* =========================================================
+   ANALYSIS SUMMARY
+   ========================================================= */
+
+.analysis-summary {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 7px;
+
+    margin-bottom: 12px;
+}
+
+.analysis-summary > div {
+    padding: 8px;
+
+    border: 1px solid #d8e4f0;
+
+    border-radius: 7px;
+
+    background: #f8fbff;
+
+    min-width: 0;
+}
+
+.analysis-summary small {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #64748b;
+
+    font-size: 8px;
+}
+
+.analysis-summary strong {
+    display: block;
+
+    color: #111827;
+
+    font-size: 10px;
+
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   CHART
+   ========================================================= */
+
+.chart-container,
+.chart-wrapper {
+    width: 100%;
+
+    position: relative;
+
+    margin: 10px auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+canvas {
+    max-width: 100% !important;
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.table-container,
+.table-scroll {
+    width: 100%;
+
+    overflow-x: auto;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.analysis-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 9px;
+}
+
+.analysis-table th,
+.analysis-table td {
+    padding: 6px 5px;
+
+    border-bottom: 1px solid #d8e3ef;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+.analysis-table th:first-child,
+.analysis-table td:first-child {
     text-align: center;
 }
 
-.result h2 {
-    margin-bottom: 15px;
+.analysis-table th {
+    background: #e4eef9;
+
+    color: #334155;
+
+    font-weight: 700;
 }
 
-.result p {
-    margin: 10px 0;
-    font-size: 17px;
+.analysis-table td {
+    color: #475569;
 }
 
-.result strong {
-    display: block;
-    margin-top: 5px;
-    font-size: 22px;
+/* =========================================================
+   NOTES
+   ========================================================= */
+
+.analysis-note,
+.note {
+    margin-top: 8px;
+
+    color: #64748b;
+
+    font-size: 8px;
+
+    line-height: 1.4;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer,
+.app-footer {
+    width: 100%;
+
+    max-width: 760px;
+
+    margin: 12px auto 0;
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 9px;
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+[data-theme="dark"] body {
+    background: #0f172a;
+
+    color: #e5e7eb;
+}
+
+[data-theme="dark"] header h1,
+[data-theme="dark"] .app-title {
+    color: #f8fafc;
+}
+
+[data-theme="dark"] header p,
+[data-theme="dark"] .app-subtitle {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] #themeToggle {
+    background: #1e293b;
+
+    border-color: #334155;
+
+    color: #ffffff;
+}
+
+[data-theme="dark"] .tab-container,
+[data-theme="dark"] .tabs,
+[data-theme="dark"] nav {
+    background: #1e293b;
+
+    border-color: #334155;
+}
+
+[data-theme="dark"] .tab-button {
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tab-button:hover {
+    background: #263449 !important;
+
+    color: #93c5fd !important;
+}
+
+[data-theme="dark"] .calculator-card {
+    background: #1e293b;
+
+    border-color: #334155;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.30);
+}
+
+[data-theme="dark"] .calculator-card h2 {
+    color: #f8fafc;
+}
+
+[data-theme="dark"] .calculator-card h3 {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .calculator-card label {
+    color: #bfdbfe;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select {
+    background: #0f172a;
+
+    border-color: #475569;
+
+    color: #f8fafc;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus {
+    border-color: #60a5fa;
+}
+
+[data-theme="dark"] .reset-button,
+[data-theme="dark"] .reset-btn,
+[data-theme="dark"] button[type="reset"] {
+    background: #334155 !important;
+
+    border-color: #475569 !important;
+
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .result-card,
+[data-theme="dark"] .analysis-card,
+[data-theme="dark"] .analysis-section,
+[data-theme="dark"] .interest-analysis {
+    background: #172a46;
+
+    border-color: #29466a;
+}
+
+[data-theme="dark"] .result-card h3,
+[data-theme="dark"] .analysis-card h3,
+[data-theme="dark"] .analysis-section h3,
+[data-theme="dark"] .interest-analysis h3 {
+    color: #f8fafc;
+}
+
+[data-theme="dark"] .result-row {
+    border-color: #29405d;
+}
+
+[data-theme="dark"] .result-label {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .result-value,
+[data-theme="dark"] #interestResult,
+[data-theme="dark"] #totalResult,
+[data-theme="dark"] #fdInterestResult,
+[data-theme="dark"] #fdTotalResult,
+[data-theme="dark"] #rdDepositedResult,
+[data-theme="dark"] #rdInterestResult,
+[data-theme="dark"] #rdTotalResult,
+[data-theme="dark"] #emiResult,
+[data-theme="dark"] #emiInterestResult,
+[data-theme="dark"] #emiTotalResult {
+    color: #f8fafc;
+}
+
+[data-theme="dark"] .analysis-summary > div {
+    background: #1e3a5f;
+
+    border-color: #355579;
+}
+
+[data-theme="dark"] .analysis-summary small {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .analysis-summary strong {
+    color: #f8fafc;
+}
+
+[data-theme="dark"] .analysis-table th {
+    background: #263b55;
+
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .analysis-table td {
+    color: #cbd5e1;
+
+    border-color: #29405d;
+}
+
+[data-theme="dark"] .analysis-note,
+[data-theme="dark"] .note,
+[data-theme="dark"] footer,
+[data-theme="dark"] .app-footer {
+    color: #94a3b8;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    body {
+        padding: 8px;
+    }
+
+    header,
+    .app-header,
+    .tab-container,
+    .tabs,
+    nav,
+    .calculator-card,
+    .app-container,
+    .container,
+    .app,
+    main,
+    footer,
+    .app-footer {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 7px;
+    }
+
+    header,
+    .app-header {
+        padding: 7px 3px;
+    }
+
+    header h1,
+    .app-header h1,
+    .app-title {
+        font-size: 19px;
+    }
+
+    #themeToggle {
+        width: 35px;
+        height: 35px;
+    }
+
+    .calculator-card {
+        padding: 14px;
+
+        border-radius: 12px;
+    }
+
+    .calculator-card h2 {
+        font-size: 17px;
+    }
+
+    .form-row,
+    .input-row,
+    .period-row {
+        grid-template-columns:
+            minmax(0, 1fr)
+            110px;
+    }
+
+    .button-row,
+    .calculate-row,
+    .form-buttons {
+        grid-template-columns:
+            minmax(0, 1fr)
+            110px;
+    }
+
+    .action-buttons,
+    .result-actions,
+    .finance-action-buttons {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 380px) {
+
+    .calculator-card {
+        padding: 11px;
+    }
+
+    .form-row,
+    .input-row,
+    .period-row,
+    .button-row,
+    .calculate-row,
+    .form-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons,
+    .result-actions,
+    .finance-action-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .tab-button {
+        font-size: 10px;
+        padding: 0 3px;
+    }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid #2563eb;
+
+    outline-offset: 2px;
+}
+/* =========================================================
+   FINAL CALCULATE / RESET BUTTON FIX
+   ========================================================= */
+
+/* All calculator buttons */
+.calculator-card button {
+    font-family: Arial, Helvetica, sans-serif !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+}
+
+/* Calculate button */
+.calculator-card button:not(.tab-button):not([id*="reset" i]):not([class*="reset" i]) {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border: 1px solid #2563eb !important;
+    border-radius: 7px !important;
+    min-height: 39px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Reset button */
+.calculator-card button[id*="reset" i],
+.calculator-card button[class*="reset" i] {
+    background: #f1f5f9 !important;
+    color: #1f2937 !important;
+    border: 1px solid #d7e0ea !important;
+    border-radius: 7px !important;
+    min-height: 39px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Hover */
+.calculator-card button:not(.tab-button):hover {
+    opacity: 0.95;
+}
+
+/* Dark mode */
+[data-theme="dark"] .calculator-card button[id*="reset" i],
+[data-theme="dark"] .calculator-card button[class*="reset" i] {
+    background: #334155 !important;
+    color: #f8fafc !important;
+    border-color: #475569 !important;
 }

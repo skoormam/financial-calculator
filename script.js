@@ -4017,16 +4017,10 @@ function downloadPDF(type) {
             type + "Calculator"
         );
 
-
     if (!calculator) {
-
-        alert(
-            t("calculatorNotFound")
-        );
-
+        alert(t("calculatorNotFound"));
         return;
     }
-
 
     const printWindow =
         window.open(
@@ -4035,48 +4029,332 @@ function downloadPDF(type) {
             "width=900,height=700"
         );
 
-
     if (!printWindow) {
-
-        alert(
-            t("popup")
-        );
-
+        alert(t("popup"));
         return;
     }
 
 
-    const clone =
-        calculator.cloneNode(
-            true
-        );
+    // ========================================================
+    // GET ACTUAL INPUT VALUES
+    // ========================================================
+
+    let inputRows = "";
 
 
-    clone
-        .querySelectorAll(
-            "button"
-        )
-        .forEach(
-            function (button) {
+    if (type === "interest") {
 
-                button.remove();
+        inputRows = `
 
-            }
-        );
+            <div class="pdf-row">
+                <span>${t("principal")}</span>
+                <strong>
+                    ${formatCurrency(
+                        parseFloat(
+                            document.getElementById(
+                                "principal"
+                            ).value
+                        ) || 0
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("interestRate")}</span>
+                <strong>
+                    ${getValue("rate")}%
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("period")}</span>
+                <strong>
+                    ${getValue("time")}
+                    ${getSelectedText("timeUnit")}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("interestType")}</span>
+                <strong>
+                    ${getSelectedText(
+                        "interestType"
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("compoundingFrequency")}</span>
+                <strong>
+                    ${getSelectedText(
+                        "compoundFrequency"
+                    )}
+                </strong>
+            </div>
+
+        `;
+
+    }
 
 
-    clone
-        .querySelectorAll(
-            ".finance-action-buttons"
-        )
-        .forEach(
-            function (element) {
+    else if (type === "fd") {
 
-                element.remove();
+        inputRows = `
 
-            }
-        );
+            <div class="pdf-row">
+                <span>${t("depositAmount")}</span>
+                <strong>
+                    ${formatCurrency(
+                        parseFloat(
+                            document.getElementById(
+                                "fdPrincipal"
+                            ).value
+                        ) || 0
+                    )}
+                </strong>
+            </div>
 
+            <div class="pdf-row">
+                <span>${t("interestRate")}</span>
+                <strong>
+                    ${getValue("fdRate")}%
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("period")}</span>
+                <strong>
+                    ${getValue("fdTime")}
+                    ${t("years")}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("compoundingFrequency")}</span>
+                <strong>
+                    ${getSelectedText(
+                        "fdFrequency"
+                    )}
+                </strong>
+            </div>
+
+        `;
+
+    }
+
+
+    else if (type === "rd") {
+
+        inputRows = `
+
+            <div class="pdf-row">
+                <span>${t("monthlyDeposit")}</span>
+                <strong>
+                    ${formatCurrency(
+                        parseFloat(
+                            document.getElementById(
+                                "rdMonthlyDeposit"
+                            ).value
+                        ) || 0
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("interestRate")}</span>
+                <strong>
+                    ${getValue("rdRate")}%
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("period")}</span>
+                <strong>
+                    ${getValue("rdTime")}
+                    ${t("years")}
+                </strong>
+            </div>
+
+        `;
+
+    }
+
+
+    else if (type === "emi") {
+
+        inputRows = `
+
+            <div class="pdf-row">
+                <span>${t("loanAmount")}</span>
+                <strong>
+                    ${formatCurrency(
+                        parseFloat(
+                            document.getElementById(
+                                "loanAmount"
+                            ).value
+                        ) || 0
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("interestRate")}</span>
+                <strong>
+                    ${getValue("loanRate")}%
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("tenure")}</span>
+                <strong>
+                    ${getValue("loanTenure")}
+                    ${getSelectedText(
+                        "loanTenureUnit"
+                    )}
+                </strong>
+            </div>
+
+        `;
+
+    }
+
+
+    // ========================================================
+    // GET RESULT VALUES
+    // ========================================================
+
+    let resultRows = "";
+
+
+    if (type === "interest") {
+
+        resultRows = `
+
+            <div class="pdf-row">
+                <span>${t("interest")}</span>
+                <strong>
+                    ${getText(
+                        "interestResult"
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("totalAmount")}</span>
+                <strong>
+                    ${getText(
+                        "totalResult"
+                    )}
+                </strong>
+            </div>
+
+        `;
+
+    }
+
+
+    else if (type === "fd") {
+
+        resultRows = `
+
+            <div class="pdf-row">
+                <span>${t("interestEarned")}</span>
+                <strong>
+                    ${getText(
+                        "fdInterestResult"
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("maturityAmount")}</span>
+                <strong>
+                    ${getText(
+                        "fdTotalResult"
+                    )}
+                </strong>
+            </div>
+
+        `;
+
+    }
+
+
+    else if (type === "rd") {
+
+        resultRows = `
+
+            <div class="pdf-row">
+                <span>${t("totalDeposited")}</span>
+                <strong>
+                    ${getText(
+                        "rdDepositedResult"
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("interestEarned")}</span>
+                <strong>
+                    ${getText(
+                        "rdInterestResult"
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("maturityAmount")}</span>
+                <strong>
+                    ${getText(
+                        "rdTotalResult"
+                    )}
+                </strong>
+            </div>
+
+        `;
+
+    }
+
+
+    else if (type === "emi") {
+
+        resultRows = `
+
+            <div class="pdf-row">
+                <span>${t("monthlyEMI")}</span>
+                <strong>
+                    ${getText(
+                        "emiResult"
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("totalInterest")}</span>
+                <strong>
+                    ${getText(
+                        "emiInterestResult"
+                    )}
+                </strong>
+            </div>
+
+            <div class="pdf-row">
+                <span>${t("totalPayment")}</span>
+                <strong>
+                    ${getText(
+                        "emiTotalResult"
+                    )}
+                </strong>
+            </div>
+
+        `;
+
+    }
+
+
+    // ========================================================
+    // CALCULATOR TITLE
+    // ========================================================
 
     const titles = {
 
@@ -4098,6 +4376,10 @@ function downloadPDF(type) {
     const title =
         titles[type];
 
+
+    // ========================================================
+    // PRINT PDF
+    // ========================================================
 
     printWindow.document.open();
 
@@ -4133,165 +4415,166 @@ body {
 
     padding: 30px;
 
-    color:
-        #111827;
+    background: #ffffff;
 
-    background:
-        #ffffff;
+    color: #111827;
 }
 
 .pdf-container {
 
     width: 100%;
 
-    max-width:
-        850px;
+    max-width: 800px;
 
-    margin:
-        0 auto;
+    margin: 0 auto;
 }
 
 .pdf-header {
 
-    text-align:
-        center;
+    text-align: center;
 
     border-bottom:
         2px solid #2563eb;
 
-    padding-bottom:
-        15px;
+    padding-bottom: 15px;
 
-    margin-bottom:
-        20px;
+    margin-bottom: 25px;
 }
 
 .pdf-header h1 {
 
-    margin:
-        0 0 8px;
+    margin: 0 0 6px;
 
-    font-size:
-        24px;
+    font-size: 25px;
+
+    color: #2563eb;
 }
 
 .pdf-header h2 {
 
-    margin:
-        0;
+    margin: 0;
 
-    font-size:
-        18px;
+    font-size: 19px;
 
-    font-weight:
-        normal;
+    color: #111827;
 }
 
 .pdf-date {
 
-    margin-top:
-        8px;
+    margin-top: 8px;
 
-    font-size:
-        12px;
+    font-size: 11px;
 
-    color:
-        #666666;
+    color: #64748b;
 }
 
-.result-card {
+.pdf-section {
+
+    margin-bottom: 20px;
 
     border:
         1px solid #dbe3ec;
 
-    border-radius:
-        8px;
+    border-radius: 10px;
 
-    padding:
-        15px;
-
-    margin-bottom:
-        18px;
-
-    background:
-        #eff6ff;
+    overflow: hidden;
 }
 
-.result-row {
+.pdf-section-title {
 
-    display:
-        flex;
+    padding: 12px 15px;
+
+    background: #eff6ff;
+
+    color: #1e3a8a;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    border-bottom:
+        1px solid #dbe3ec;
+}
+
+.pdf-row {
+
+    display: flex;
 
     justify-content:
         space-between;
 
-    gap:
-        20px;
+    align-items: center;
+
+    gap: 20px;
 
     padding:
-        7px 0;
+        10px 15px;
 
     border-bottom:
-        1px solid #dddddd;
+        1px solid #e5e7eb;
+
+    font-size: 12px;
 }
 
-.analysis-table {
+.pdf-row:last-child {
 
-    width:
-        100%;
-
-    border-collapse:
-        collapse;
-
-    margin-top:
-        10px;
+    border-bottom: none;
 }
 
-.analysis-table th,
-.analysis-table td {
+.pdf-row span {
 
-    border:
-        1px solid #cccccc;
-
-    padding:
-        8px;
-
-    text-align:
-        right;
+    color: #64748b;
 }
 
-.analysis-table th {
+.pdf-row strong {
 
-    background:
-        #f3f4f6;
+    color: #111827;
+
+    font-weight: 700;
+
+    text-align: right;
+}
+
+.pdf-result {
+
+    background: #f0fdf4;
+}
+
+.pdf-result .pdf-section-title {
+
+    background: #dcfce7;
+
+    color: #166534;
 }
 
 .pdf-footer {
 
-    text-align:
-        center;
+    text-align: center;
 
-    margin-top:
-        30px;
+    margin-top: 30px;
 
-    padding-top:
-        15px;
+    padding-top: 15px;
 
     border-top:
-        1px solid #dddddd;
+        1px solid #dbe3ec;
 
-    font-size:
-        12px;
+    font-size: 10px;
 
-    color:
-        #666666;
+    color: #64748b;
 }
 
 @media print {
 
     body {
-        padding:
-            10px;
+
+        padding: 10px;
+    }
+
+    @page {
+
+        size: A4;
+
+        margin: 15mm;
     }
 
 }
@@ -4304,10 +4587,13 @@ body {
 
 <div class="pdf-container">
 
+
+    <!-- HEADER -->
+
     <div class="pdf-header">
 
         <h1>
-            Finance App by Surendra
+            Finance App
         </h1>
 
         <h2>
@@ -4316,22 +4602,57 @@ body {
 
         <div class="pdf-date">
 
-            ${t("generated")}:
-            ${new Date().toLocaleString("en-IN")}
+            ${new Date().toLocaleString(
+                "en-IN"
+            )}
 
         </div>
 
     </div>
 
 
-    ${clone.outerHTML}
+    <!-- INPUT DETAILS -->
 
+    <div class="pdf-section">
+
+        <div class="pdf-section-title">
+
+            ${currentLanguage === "te"
+                ? "లెక్కింపు వివరాలు"
+                : "Calculation Details"}
+
+        </div>
+
+
+        ${inputRows}
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div class="pdf-section pdf-result">
+
+        <div class="pdf-section-title">
+
+            ${t("result")}
+
+        </div>
+
+
+        ${resultRows}
+
+    </div>
+
+
+    <!-- FOOTER -->
 
     <div class="pdf-footer">
 
         ${t("calculatedUsing")}
 
     </div>
+
 
 </div>
 
@@ -4340,17 +4661,22 @@ body {
 
 setTimeout(
     function () {
+
         window.print();
+
     },
     500
 );
+
 
 window.onafterprint =
     function () {
 
         setTimeout(
             function () {
+
                 window.close();
+
             },
             300
         );
@@ -4358,6 +4684,7 @@ window.onafterprint =
     };
 
 <\/script>
+
 
 </body>
 
@@ -4368,7 +4695,6 @@ window.onafterprint =
 
     printWindow.document.close();
 }
-
 
 // ============================================================
 // STARTUP

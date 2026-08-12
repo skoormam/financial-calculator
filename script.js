@@ -1,15 +1,420 @@
 // ============================================================
 // FINANCE APP BY SURENDRA
-// COMPLETE script.js - CORRECTED CHART VERSION
+// COMPLETE script.js - English + Telugu
 // ============================================================
 
-document.addEventListener("DOMContentLoaded", function () {
-    loadTheme();
-    loadSavedValues();
-    setupTabs();
-    setupEnterKey();
-    setupActionButtons();
-});
+const LANG = {
+    en: {
+        appTitle: "Finance App",
+        by: "by Surendra",
+
+        interest: "Interest",
+        fd: "FD",
+        rd: "RD",
+        emi: "EMI",
+
+        interestCalculator: "Interest Calculator",
+        interestDesc: "Calculate Simple & Compound Interest",
+
+        fdCalculator: "FD Calculator",
+        fdDesc: "Calculate Fixed Deposit maturity amount",
+
+        rdCalculator: "RD Calculator",
+        rdDesc: "Calculate Recurring Deposit maturity amount",
+
+        emiCalculator: "EMI Calculator",
+        emiDesc: "Calculate your monthly loan EMI",
+
+        principal: "Principal Amount (₹)",
+        interestRate: "Interest Rate (%)",
+        period: "Period",
+
+        years: "Years",
+        months: "Months",
+
+        interestType: "Interest Type",
+        simpleInterest: "Simple Interest",
+        compoundInterest: "Compound Interest",
+
+        compoundingFrequency: "Compounding Frequency",
+        annually: "Annually",
+        halfYearly: "Half-Yearly",
+        quarterly: "Quarterly",
+        monthly: "Monthly",
+
+        calculate: "Calculate",
+        reset: "Reset",
+
+        result: "Result",
+        interest: "Interest",
+        totalAmount: "Total Amount",
+
+        depositAmount: "Deposit Amount (₹)",
+        maturityAmount: "Maturity Amount",
+        interestEarned: "Interest Earned",
+
+        monthlyDeposit: "Monthly Deposit (₹)",
+        totalDeposited: "Total Deposited",
+
+        loanAmount: "Loan Amount (₹)",
+        tenure: "Loan Tenure",
+
+        monthlyEMI: "Monthly EMI",
+        yearlyPayment: "Yearly Payment",
+        totalInterest: "Total Interest",
+        totalPayment: "Total Payment",
+
+        interestAnalysis: "📊 Interest Analysis",
+        fdAnalysis: "📊 FD Analysis",
+        rdAnalysis: "📊 RD Analysis",
+        emiAnalysis: "📊 EMI Analysis",
+
+        principalVsInterest: "Principal vs Interest",
+        depositsVsInterest: "Deposits vs Interest",
+        yearlyFDGrowth: "Year-wise FD Growth",
+        yearlyRDGrowth: "Year-wise RD Growth",
+        remainingLoan: "Remaining Loan Balance",
+
+        principal: "Principal",
+        interestLabel: "Interest",
+        depositLabel: "Deposit",
+        balance: "Balance",
+
+        yearlyBreakdown: "Year-wise Breakdown",
+        year: "Year",
+        principalPaid: "Principal Paid",
+        interestPaid: "Interest Paid",
+
+        copyResults: "📋 Copy Results",
+        whatsapp: "📱 WhatsApp",
+        savePDF: "📄 Save PDF",
+        copied: "✅ Copied!",
+
+        enterAmount: "Enter amount",
+        enterInterestRate: "Enter interest rate",
+        enterPeriod: "Enter period",
+        enterDeposit: "Enter deposit amount",
+        enterLoanAmount: "Enter loan amount",
+        enterTenure: "Enter loan tenure",
+
+        language: "Select language",
+
+        generated: "Generated",
+        calculatedUsing:
+            "Calculated using Finance App by Surendra.",
+
+        invalid:
+            "is too large or invalid.",
+
+        greaterZero:
+            "must be greater than 0.",
+
+        rateRange:
+            "Interest rate must be between 0% and 100%.",
+
+        tooLarge:
+            "The calculated result is too large. Please use smaller values.",
+
+        principalField:
+            "a principal amount",
+
+        periodField:
+            "a period",
+
+        depositField:
+            "a deposit amount",
+
+        monthlyDepositField:
+            "a monthly deposit",
+
+        loanField:
+            "a loan amount",
+
+        tenureField:
+            "a loan tenure",
+
+        calculatorNotFound:
+            "Calculator could not be found.",
+
+        popup:
+            "Please allow pop-ups for this Finance App to save the PDF."
+    },
+
+
+    te: {
+        appTitle: "ఫైనాన్స్ యాప్",
+        by: "సురేంద్ర",
+
+        interest: "వడ్డీ",
+        fd: "FD",
+        rd: "RD",
+        emi: "EMI",
+
+        interestCalculator:
+            "వడ్డీ కాలిక్యులేటర్",
+
+        interestDesc:
+            "సాధారణ & చక్రవడ్డీ లెక్కించండి",
+
+        fdCalculator:
+            "FD కాలిక్యులేటర్",
+
+        fdDesc:
+            "ఫిక్స్‌డ్ డిపాజిట్ మెచ్యూరిటీ మొత్తాన్ని లెక్కించండి",
+
+        rdCalculator:
+            "RD కాలిక్యులేటర్",
+
+        rdDesc:
+            "రికరింగ్ డిపాజిట్ మెచ్యూరిటీ మొత్తాన్ని లెక్కించండి",
+
+        emiCalculator:
+            "EMI కాలిక్యులేటర్",
+
+        emiDesc:
+            "మీ నెలవారీ లోన్ EMIని లెక్కించండి",
+
+        principal:
+            "అసలు మొత్తం (₹)",
+
+        interestRate:
+            "వడ్డీ రేటు (%)",
+
+        period:
+            "కాల వ్యవధి",
+
+        years:
+            "సంవత్సరాలు",
+
+        months:
+            "నెలలు",
+
+        interestType:
+            "వడ్డీ రకం",
+
+        simpleInterest:
+            "సాధారణ వడ్డీ",
+
+        compoundInterest:
+            "చక్రవడ్డీ",
+
+        compoundingFrequency:
+            "చక్రవడ్డీ తరచుదనం",
+
+        annually:
+            "ఏటా",
+
+        halfYearly:
+            "అర్ధ సంవత్సరానికి",
+
+        quarterly:
+            "త్రైమాసికం",
+
+        monthly:
+            "నెలవారీ",
+
+        calculate:
+            "లెక్కించు",
+
+        reset:
+            "రీసెట్",
+
+        result:
+            "ఫలితం",
+
+        interest:
+            "వడ్డీ",
+
+        totalAmount:
+            "మొత్తం మొత్తం",
+
+        depositAmount:
+            "డిపాజిట్ మొత్తం (₹)",
+
+        maturityAmount:
+            "మెచ్యూరిటీ మొత్తం",
+
+        interestEarned:
+            "ఆర్జించిన వడ్డీ",
+
+        monthlyDeposit:
+            "నెలవారీ డిపాజిట్ (₹)",
+
+        totalDeposited:
+            "మొత్తం డిపాజిట్",
+
+        loanAmount:
+            "లోన్ మొత్తం (₹)",
+
+        tenure:
+            "లోన్ కాలవ్యవధి",
+
+        monthlyEMI:
+            "నెలవారీ EMI",
+
+        yearlyPayment:
+            "వార్షిక చెల్లింపు",
+
+        totalInterest:
+            "మొత్తం వడ్డీ",
+
+        totalPayment:
+            "మొత్తం చెల్లింపు",
+
+        interestAnalysis:
+            "📊 వడ్డీ విశ్లేషణ",
+
+        fdAnalysis:
+            "📊 FD విశ్లేషణ",
+
+        rdAnalysis:
+            "📊 RD విశ్లేషణ",
+
+        emiAnalysis:
+            "📊 EMI విశ్లేషణ",
+
+        principalVsInterest:
+            "అసలు మొత్తం vs వడ్డీ",
+
+        depositsVsInterest:
+            "డిపాజిట్లు vs వడ్డీ",
+
+        yearlyFDGrowth:
+            "సంవత్సరాల వారీ FD వృద్ధి",
+
+        yearlyRDGrowth:
+            "సంవత్సరాల వారీ RD వృద్ధి",
+
+        remainingLoan:
+            "మిగిలిన లోన్ బకాయి",
+
+        principal:
+            "అసలు మొత్తం",
+
+        interestLabel:
+            "వడ్డీ",
+
+        depositLabel:
+            "డిపాజిట్",
+
+        balance:
+            "బ్యాలెన్స్",
+
+        yearlyBreakdown:
+            "సంవత్సరాల వారీ వివరాలు",
+
+        year:
+            "సంవత్సరం",
+
+        principalPaid:
+            "చెల్లించిన అసలు",
+
+        interestPaid:
+            "చెల్లించిన వడ్డీ",
+
+        copyResults:
+            "📋 ఫలితాలను కాపీ చేయండి",
+
+        whatsapp:
+            "📱 WhatsApp",
+
+        savePDF:
+            "📄 PDF సేవ్ చేయండి",
+
+        copied:
+            "✅ కాపీ అయింది!",
+
+        enterAmount:
+            "మొత్తం నమోదు చేయండి",
+
+        enterInterestRate:
+            "వడ్డీ రేటు నమోదు చేయండి",
+
+        enterPeriod:
+            "కాలవ్యవధి నమోదు చేయండి",
+
+        enterDeposit:
+            "డిపాజిట్ మొత్తం నమోదు చేయండి",
+
+        enterLoanAmount:
+            "లోన్ మొత్తం నమోదు చేయండి",
+
+        enterTenure:
+            "లోన్ కాలవ్యవధి నమోదు చేయండి",
+
+        language:
+            "భాషను ఎంచుకోండి",
+
+        generated:
+            "రూపొందించిన సమయం",
+
+        calculatedUsing:
+            "Finance App by Surendra ద్వారా లెక్కించబడింది.",
+
+        invalid:
+            "చాలా పెద్దది లేదా చెల్లదు.",
+
+        greaterZero:
+            "0 కంటే ఎక్కువగా ఉండాలి.",
+
+        rateRange:
+            "వడ్డీ రేటు 0% నుండి 100% మధ్య ఉండాలి.",
+
+        tooLarge:
+            "లెక్కించిన ఫలితం చాలా పెద్దది. దయచేసి చిన్న విలువలను ఉపయోగించండి.",
+
+        principalField:
+            "అసలు మొత్తాన్ని",
+
+        periodField:
+            "కాలవ్యవధిని",
+
+        depositField:
+            "డిపాజిట్ మొత్తాన్ని",
+
+        monthlyDepositField:
+            "నెలవారీ డిపాజిట్‌ను",
+
+        loanField:
+            "లోన్ మొత్తాన్ని",
+
+        tenureField:
+            "లోన్ కాలవ్యవధిని",
+
+        calculatorNotFound:
+            "కాలిక్యులేటర్ కనుగొనబడలేదు.",
+
+        popup:
+            "PDF సేవ్ చేయడానికి ఈ Finance App కోసం పాప్-అప్స్‌ను అనుమతించండి."
+    }
+};
+
+
+// ============================================================
+// CURRENT LANGUAGE
+// ============================================================
+
+let currentLanguage =
+    localStorage.getItem(
+        "financeCalculatorLanguage"
+    ) || "en";
+
+
+function t(key) {
+
+    if (
+        LANG[currentLanguage] &&
+        LANG[currentLanguage][key]
+    ) {
+        return LANG[currentLanguage][key];
+    }
+
+    if (LANG.en[key]) {
+        return LANG.en[key];
+    }
+
+    return key;
+}
 
 
 // ============================================================
@@ -17,58 +422,81 @@ document.addEventListener("DOMContentLoaded", function () {
 // ============================================================
 
 function formatCurrency(amount) {
+
     if (!Number.isFinite(amount)) {
         return "₹0.00";
     }
 
-    return new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }).format(amount);
+    return new Intl.NumberFormat(
+        "en-IN",
+        {
+            style: "currency",
+            currency: "INR",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    ).format(amount);
 }
 
 
 // ============================================================
-// TABS
+// SHOW CALCULATOR
 // ============================================================
-
-function setupTabs() {
-    document.querySelectorAll(".tab-button").forEach(function (tab) {
-        tab.addEventListener("click", function () {
-            showCalculator(tab.dataset.calculator);
-        });
-    });
-}
-
 
 function showCalculator(type) {
 
     const calculators = {
-        interest: document.getElementById("interestCalculator"),
-        fd: document.getElementById("fdCalculator"),
-        rd: document.getElementById("rdCalculator"),
-        emi: document.getElementById("emiCalculator")
+
+        interest:
+            "interestCalculator",
+
+        fd:
+            "fdCalculator",
+
+        rd:
+            "rdCalculator",
+
+        emi:
+            "emiCalculator"
     };
 
-    Object.values(calculators).forEach(function (calculator) {
-        if (calculator) {
-            calculator.classList.add("hidden");
-        }
-    });
 
-    if (calculators[type]) {
-        calculators[type].classList.remove("hidden");
+    Object.values(calculators)
+        .forEach(function (id) {
+
+            const element =
+                document.getElementById(id);
+
+            if (element) {
+                element.classList.add("hidden");
+            }
+
+        });
+
+
+    const active =
+        document.getElementById(
+            calculators[type]
+        );
+
+    if (active) {
+        active.classList.remove("hidden");
     }
 
-    document.querySelectorAll(".tab-button").forEach(function (button) {
-        button.classList.remove("active");
-    });
 
-    const activeTab = document.querySelector(
-        `.tab-button[data-calculator="${type}"]`
-    );
+    document
+        .querySelectorAll(".tab-button")
+        .forEach(function (button) {
+
+            button.classList.remove("active");
+
+        });
+
+
+    const activeTab =
+        document.querySelector(
+            `.tab-button[data-calculator="${type}"]`
+        );
 
     if (activeTab) {
         activeTab.classList.add("active");
@@ -80,65 +508,94 @@ function showCalculator(type) {
 // VALIDATION
 // ============================================================
 
-function validateNumber(value, fieldName, errorElement) {
+function validateNumber(
+    value,
+    fieldName,
+    errorElement
+) {
 
     if (!Number.isFinite(value)) {
+
         errorElement.textContent =
-            `${fieldName} is too large or invalid.`;
+            `${fieldName} ${t("invalid")}`;
+
         return false;
     }
+
 
     if (value <= 0) {
+
         errorElement.textContent =
-            `${fieldName} must be greater than 0.`;
+            `${fieldName} ${t("greaterZero")}`;
+
         return false;
     }
 
+
     if (value > 1000000000000) {
+
         errorElement.textContent =
-            `${fieldName} cannot exceed ₹1,00,00,00,00,000.`;
+            `${fieldName} ${t("invalid")}`;
+
         return false;
     }
+
 
     return true;
 }
 
 
-function validateRate(rate, errorElement) {
+function validateRate(
+    rate,
+    errorElement
+) {
 
     if (
         !Number.isFinite(rate) ||
         rate < 0 ||
         rate > 100
     ) {
+
         errorElement.textContent =
-            "Interest rate must be between 0% and 100%.";
+            t("rateRange");
+
         return false;
     }
+
 
     return true;
 }
 
 
-function validateResult(value, errorElement) {
+function validateResult(
+    value,
+    errorElement
+) {
 
     if (!Number.isFinite(value)) {
+
         errorElement.textContent =
-            "The calculated result is too large. Please use smaller values.";
+            t("tooLarge");
+
         return false;
     }
+
 
     return true;
 }
 
 
-function clearError(id) {
+// ============================================================
+// REMOVE ANALYSIS
+// ============================================================
+
+function removeAnalysis(id) {
 
     const element =
         document.getElementById(id);
 
     if (element) {
-        element.textContent = "";
+        element.remove();
     }
 }
 
@@ -151,117 +608,170 @@ function calculateInterest() {
 
     const principal =
         parseFloat(
-            document.getElementById("principal").value
+            document.getElementById(
+                "principal"
+            ).value
         );
+
 
     const rate =
         parseFloat(
-            document.getElementById("rate").value
+            document.getElementById(
+                "rate"
+            ).value
         );
+
 
     let time =
         parseFloat(
-            document.getElementById("time").value
+            document.getElementById(
+                "time"
+            ).value
         );
 
-    const timeUnit =
-        document.getElementById("timeUnit").value;
+
+    const unit =
+        document.getElementById(
+            "timeUnit"
+        ).value;
+
 
     const interestType =
-        document.getElementById("interestType").value;
+        document.getElementById(
+            "interestType"
+        ).value;
+
 
     const frequency =
         parseInt(
-            document.getElementById("compoundFrequency").value
+            document.getElementById(
+                "compoundFrequency"
+            ).value
         );
 
+
     const error =
-        document.getElementById("interestError");
+        document.getElementById(
+            "interestError"
+        );
+
 
     error.textContent = "";
 
-    if (!validateNumber(
-        principal,
-        "a principal amount",
-        error
-    )) {
+
+    if (
+        !validateNumber(
+            principal,
+            t("principalField"),
+            error
+        )
+    ) {
         return;
     }
 
-    if (!validateRate(rate, error)) {
+
+    if (
+        !validateRate(
+            rate,
+            error
+        )
+    ) {
         return;
     }
 
-    if (!validateNumber(
-        time,
-        "a period",
-        error
-    )) {
+
+    if (
+        !validateNumber(
+            time,
+            t("periodField"),
+            error
+        )
+    ) {
         return;
     }
 
-    if (timeUnit === "months") {
+
+    if (unit === "months") {
         time = time / 12;
     }
 
-    let interest;
+
     let totalAmount;
 
-    if (interestType === "simple") {
 
-        interest =
-            principal *
-            rate *
-            time /
-            100;
+    if (
+        interestType === "simple"
+    ) {
 
         totalAmount =
             principal +
-            interest;
+            (
+                principal *
+                rate *
+                time /
+                100
+            );
 
     } else {
 
         totalAmount =
             principal *
             Math.pow(
-                1 + (rate / 100) / frequency,
+                1 +
+                (rate / 100) /
+                frequency,
                 frequency * time
             );
-
-        interest =
-            totalAmount -
-            principal;
     }
 
-    if (!validateResult(
-        totalAmount,
-        error
-    )) {
+
+    const interest =
+        totalAmount -
+        principal;
+
+
+    if (
+        !validateResult(
+            totalAmount,
+            error
+        )
+    ) {
         return;
     }
 
-    if (!validateResult(
-        interest,
-        error
-    )) {
+
+    if (
+        !validateResult(
+            interest,
+            error
+        )
+    ) {
         return;
     }
+
 
     document.getElementById(
         "interestResult"
     ).textContent =
-        formatCurrency(interest);
+        formatCurrency(
+            interest
+        );
+
 
     document.getElementById(
         "totalResult"
     ).textContent =
-        formatCurrency(totalAmount);
+        formatCurrency(
+            totalAmount
+        );
+
 
     createInterestAnalysis(
         principal,
         interest,
         totalAmount
     );
+
 
     saveCalculatorValues();
 }
@@ -281,73 +791,95 @@ function createInterestAnalysis(
         "interestAnalysis"
     );
 
-    const calculator =
+
+    const section =
         document.getElementById(
             "interestCalculator"
         );
 
-    if (!calculator) {
+
+    if (!section) {
         return;
     }
 
+
     const analysis =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     analysis.id =
         "interestAnalysis";
 
+
     analysis.className =
         "result-card";
 
-    analysis.style.marginTop =
-        "20px";
-
-    analysis.style.overflow =
-        "hidden";
 
     analysis.innerHTML = `
 
-        <h3>📊 Interest Analysis</h3>
+        <h3>
+            ${t("interestAnalysis")}
+        </h3>
 
         <div class="chart-title">
-            Principal vs Interest
+            ${t("principalVsInterest")}
         </div>
 
         ${createDonutChartHTML(
             principal,
             interest,
-            "Principal",
-            "Interest"
+            t("principal"),
+            t("interestLabel")
         )}
 
         <div class="analysis-summary">
 
             <div>
-                <small>Principal</small>
+
+                <small>
+                    ${t("principal")}
+                </small>
+
                 <strong>
                     ${formatCurrency(principal)}
                 </strong>
+
             </div>
 
+
             <div>
-                <small>Interest</small>
+
+                <small>
+                    ${t("interestLabel")}
+                </small>
+
                 <strong>
                     ${formatCurrency(interest)}
                 </strong>
+
             </div>
 
+
             <div>
-                <small>Total Amount</small>
+
+                <small>
+                    ${t("totalAmount")}
+                </small>
+
                 <strong>
                     ${formatCurrency(totalAmount)}
                 </strong>
+
             </div>
 
         </div>
 
     `;
 
-    calculator.appendChild(
+
+    section.appendChild(
         analysis
     );
 }
@@ -366,12 +898,14 @@ function calculateFD() {
             ).value
         );
 
+
     const rate =
         parseFloat(
             document.getElementById(
                 "fdRate"
             ).value
         );
+
 
     const time =
         parseFloat(
@@ -380,6 +914,7 @@ function calculateFD() {
             ).value
         );
 
+
     const frequency =
         parseInt(
             document.getElementById(
@@ -387,60 +922,88 @@ function calculateFD() {
             ).value
         );
 
+
     const error =
         document.getElementById(
             "fdError"
         );
 
+
     error.textContent = "";
 
-    if (!validateNumber(
-        principal,
-        "a deposit amount",
-        error
-    )) {
+
+    if (
+        !validateNumber(
+            principal,
+            t("depositField"),
+            error
+        )
+    ) {
         return;
     }
 
-    if (!validateRate(rate, error)) {
+
+    if (
+        !validateRate(
+            rate,
+            error
+        )
+    ) {
         return;
     }
 
-    if (!validateNumber(
-        time,
-        "a period",
-        error
-    )) {
+
+    if (
+        !validateNumber(
+            time,
+            t("periodField"),
+            error
+        )
+    ) {
         return;
     }
 
-    const maturityAmount =
+
+    const maturity =
         principal *
         Math.pow(
-            1 + (rate / 100) / frequency,
+            1 +
+            (rate / 100) /
+            frequency,
             frequency * time
         );
 
+
     const interest =
-        maturityAmount -
+        maturity -
         principal;
 
-    if (!validateResult(
-        maturityAmount,
-        error
-    )) {
+
+    if (
+        !validateResult(
+            maturity,
+            error
+        )
+    ) {
         return;
     }
+
 
     document.getElementById(
         "fdInterestResult"
     ).textContent =
-        formatCurrency(interest);
+        formatCurrency(
+            interest
+        );
+
 
     document.getElementById(
         "fdTotalResult"
     ).textContent =
-        formatCurrency(maturityAmount);
+        formatCurrency(
+            maturity
+        );
+
 
     createFDAnalysis(
         principal,
@@ -448,8 +1011,9 @@ function calculateFD() {
         time,
         frequency,
         interest,
-        maturityAmount
+        maturity
     );
+
 
     saveCalculatorValues();
 }
@@ -465,28 +1029,33 @@ function createFDAnalysis(
     time,
     frequency,
     totalInterest,
-    maturityAmount
+    maturity
 ) {
 
     removeAnalysis(
         "fdAnalysis"
     );
 
+
     const section =
         document.getElementById(
             "fdCalculator"
         );
 
+
     if (!section) {
         return;
     }
 
-    const yearData = [];
 
-    let previousBalance =
+    const data = [];
+
+    let previous =
         principal;
 
-    let yearRows = "";
+
+    let rows = "";
+
 
     for (
         let year = 1;
@@ -494,29 +1063,36 @@ function createFDAnalysis(
         year++
     ) {
 
-        const completedYears =
+        const completed =
             Math.min(
                 year,
                 time
             );
 
+
         const balance =
             principal *
             Math.pow(
-                1 + (rate / 100) / frequency,
-                frequency * completedYears
+                1 +
+                (rate / 100) /
+                frequency,
+                frequency *
+                completed
             );
+
 
         const yearlyInterest =
             balance -
-            previousBalance;
+            previous;
 
-        yearData.push({
+
+        data.push({
             year: year,
             balance: balance
         });
 
-        yearRows += `
+
+        rows += `
 
             <tr>
 
@@ -540,88 +1116,127 @@ function createFDAnalysis(
 
         `;
 
-        previousBalance =
+
+        previous =
             balance;
     }
 
+
     const analysis =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     analysis.id =
         "fdAnalysis";
 
+
     analysis.className =
         "result-card";
 
-    analysis.style.marginTop =
-        "20px";
 
     analysis.innerHTML = `
 
-        <h3>📊 FD Analysis</h3>
+        <h3>
+            ${t("fdAnalysis")}
+        </h3>
+
 
         <div class="analysis-summary">
 
             <div>
-                <small>Deposit Amount</small>
+
+                <small>
+                    ${t("depositAmount")}
+                </small>
+
                 <strong>
-                    ${formatCurrency(principal)}
+                    ${formatCurrency(
+                        principal
+                    )}
                 </strong>
+
             </div>
 
-            <div>
-                <small>Interest Earned</small>
-                <strong>
-                    ${formatCurrency(totalInterest)}
-                </strong>
-            </div>
 
             <div>
-                <small>Maturity Amount</small>
+
+                <small>
+                    ${t("interestEarned")}
+                </small>
+
                 <strong>
-                    ${formatCurrency(maturityAmount)}
+                    ${formatCurrency(
+                        totalInterest
+                    )}
                 </strong>
+
             </div>
 
+
             <div>
-                <small>Interest Rate</small>
+
+                <small>
+                    ${t("maturityAmount")}
+                </small>
+
+                <strong>
+                    ${formatCurrency(
+                        maturity
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <small>
+                    ${t("interestRate")}
+                </small>
+
                 <strong>
                     ${rate}%
                 </strong>
+
             </div>
 
         </div>
 
 
         <div class="chart-title">
-            Principal vs Interest
+            ${t("principalVsInterest")}
         </div>
+
 
         ${createDonutChartHTML(
             principal,
             totalInterest,
-            "Principal",
-            "Interest"
+            t("principal"),
+            t("interestLabel")
         )}
 
 
         <div class="chart-title">
-            Year-wise FD Growth
+            ${t("yearlyFDGrowth")}
         </div>
 
+
         ${createBarChartHTML(
-            yearData.map(
+            data.map(
                 item => item.year
             ),
-            yearData.map(
+            data.map(
                 item => item.balance
             )
         )}
 
 
         <h4>
-            Year-wise Breakdown
+            ${t("yearlyBreakdown")}
         </h4>
+
 
         <div class="table-scroll">
 
@@ -631,18 +1246,27 @@ function createFDAnalysis(
 
                     <tr>
 
-                        <th>Year</th>
+                        <th>
+                            ${t("year")}
+                        </th>
 
-                        <th>Interest Earned</th>
+                        <th>
+                            ${t("interestEarned")}
+                        </th>
 
-                        <th>Balance</th>
+                        <th>
+                            ${t("balance")}
+                        </th>
 
                     </tr>
 
                 </thead>
 
+
                 <tbody>
-                    ${yearRows}
+
+                    ${rows}
+
                 </tbody>
 
             </table>
@@ -650,6 +1274,7 @@ function createFDAnalysis(
         </div>
 
     `;
+
 
     section.appendChild(
         analysis
@@ -670,12 +1295,14 @@ function calculateRD() {
             ).value
         );
 
+
     const rate =
         parseFloat(
             document.getElementById(
                 "rdRate"
             ).value
         );
+
 
     const years =
         parseFloat(
@@ -684,87 +1311,113 @@ function calculateRD() {
             ).value
         );
 
+
     const error =
         document.getElementById(
             "rdError"
         );
 
+
     error.textContent = "";
 
-    if (!validateNumber(
-        monthlyDeposit,
-        "a monthly deposit",
-        error
-    )) {
+
+    if (
+        !validateNumber(
+            monthlyDeposit,
+            t("monthlyDepositField"),
+            error
+        )
+    ) {
         return;
     }
 
-    if (!validateRate(rate, error)) {
+
+    if (
+        !validateRate(
+            rate,
+            error
+        )
+    ) {
         return;
     }
 
-    if (!validateNumber(
-        years,
-        "a period",
-        error
-    )) {
+
+    if (
+        !validateNumber(
+            years,
+            t("periodField"),
+            error
+        )
+    ) {
         return;
     }
+
 
     const months =
         Math.round(
             years * 12
         );
 
+
     const monthlyRate =
-        rate /
-        100 /
-        12;
+        rate / 100 / 12;
 
-    let maturityAmount;
 
-    if (monthlyRate === 0) {
+    let maturity;
 
-        maturityAmount =
+
+    if (
+        monthlyRate === 0
+    ) {
+
+        maturity =
             monthlyDeposit *
             months;
 
     } else {
 
-        maturityAmount =
+        maturity =
             monthlyDeposit *
             (
                 (
                     Math.pow(
                         1 + monthlyRate,
                         months
-                    ) - 1
+                    ) -
+                    1
                 ) /
                 monthlyRate
             );
     }
 
-    const totalDeposited =
+
+    const deposited =
         monthlyDeposit *
         months;
 
-    const interest =
-        maturityAmount -
-        totalDeposited;
 
-    if (!validateResult(
-        maturityAmount,
-        error
-    )) {
+    const interest =
+        maturity -
+        deposited;
+
+
+    if (
+        !validateResult(
+            maturity,
+            error
+        )
+    ) {
         return;
     }
+
 
     document.getElementById(
         "rdDepositedResult"
     ).textContent =
         formatCurrency(
-            totalDeposited
+            deposited
         );
+
 
     document.getElementById(
         "rdInterestResult"
@@ -773,22 +1426,25 @@ function calculateRD() {
             interest
         );
 
+
     document.getElementById(
         "rdTotalResult"
     ).textContent =
         formatCurrency(
-            maturityAmount
+            maturity
         );
+
 
     createRDAnalysis(
         monthlyDeposit,
         rate,
         years,
         months,
-        totalDeposited,
+        deposited,
         interest,
-        maturityAmount
+        maturity
     );
+
 
     saveCalculatorValues();
 }
@@ -803,29 +1459,37 @@ function createRDAnalysis(
     rate,
     years,
     months,
-    totalDeposited,
+    deposited,
     totalInterest,
-    maturityAmount
+    maturity
 ) {
 
     removeAnalysis(
         "rdAnalysis"
     );
 
+
     const section =
         document.getElementById(
             "rdCalculator"
         );
 
+
     if (!section) {
         return;
     }
 
-    const yearData = [];
 
-    let previousBalance = 0;
+    const data = [];
 
-    let yearRows = "";
+    let previous = 0;
+
+    let rows = "";
+
+
+    const monthlyRate =
+        rate / 100 / 12;
+
 
     for (
         let year = 1;
@@ -839,25 +1503,27 @@ function createRDAnalysis(
                 months
             );
 
+
         const startMonth =
             (year - 1) * 12;
+
 
         const monthsThisYear =
             endMonth -
             startMonth;
 
+
         const depositedThisYear =
             monthlyDeposit *
             monthsThisYear;
 
-        const monthlyRate =
-            rate /
-            100 /
-            12;
 
         let balance;
 
-        if (monthlyRate === 0) {
+
+        if (
+            monthlyRate === 0
+        ) {
 
             balance =
                 monthlyDeposit *
@@ -872,23 +1538,27 @@ function createRDAnalysis(
                         Math.pow(
                             1 + monthlyRate,
                             endMonth
-                        ) - 1
+                        ) -
+                        1
                     ) /
                     monthlyRate
                 );
         }
 
+
         const interestThisYear =
             balance -
-            previousBalance -
+            previous -
             depositedThisYear;
 
-        yearData.push({
+
+        data.push({
             year: year,
             balance: balance
         });
 
-        yearRows += `
+
+        rows += `
 
             <tr>
 
@@ -918,98 +1588,129 @@ function createRDAnalysis(
 
         `;
 
-        previousBalance =
+
+        previous =
             balance;
     }
+
 
     const analysis =
         document.createElement(
             "div"
         );
 
+
     analysis.id =
         "rdAnalysis";
+
 
     analysis.className =
         "result-card";
 
-    analysis.style.marginTop =
-        "20px";
 
     analysis.innerHTML = `
 
-        <h3>📊 RD Analysis</h3>
+        <h3>
+            ${t("rdAnalysis")}
+        </h3>
+
 
         <div class="analysis-summary">
 
             <div>
-                <small>Monthly Deposit</small>
+
+                <small>
+                    ${t("monthlyDeposit")}
+                </small>
+
                 <strong>
                     ${formatCurrency(
                         monthlyDeposit
                     )}
                 </strong>
+
             </div>
 
+
             <div>
-                <small>Total Deposited</small>
+
+                <small>
+                    ${t("totalDeposited")}
+                </small>
+
                 <strong>
                     ${formatCurrency(
-                        totalDeposited
+                        deposited
                     )}
                 </strong>
+
             </div>
 
+
             <div>
-                <small>Interest Earned</small>
+
+                <small>
+                    ${t("interestEarned")}
+                </small>
+
                 <strong>
                     ${formatCurrency(
                         totalInterest
                     )}
                 </strong>
+
             </div>
 
+
             <div>
-                <small>Maturity Amount</small>
+
+                <small>
+                    ${t("maturityAmount")}
+                </small>
+
                 <strong>
                     ${formatCurrency(
-                        maturityAmount
+                        maturity
                     )}
                 </strong>
+
             </div>
 
         </div>
 
 
         <div class="chart-title">
-            Deposits vs Interest
+            ${t("depositsVsInterest")}
         </div>
 
+
         ${createDonutChartHTML(
-            totalDeposited,
+            deposited,
             totalInterest,
-            "Deposits",
-            "Interest"
+            t("depositLabel"),
+            t("interestLabel")
         )}
 
 
         <div class="chart-title">
-            Year-wise RD Growth
+            ${t("yearlyRDGrowth")}
         </div>
 
+
         ${createBarChartHTML(
-            yearData.map(
+            data.map(
                 item => item.year
             ),
-            yearData.map(
+            data.map(
                 item => item.balance
             )
         )}
 
 
         <h4>
-            Year-wise Breakdown
+            ${t("yearlyBreakdown")}
         </h4>
+
 
         <div class="table-scroll">
 
@@ -1019,20 +1720,31 @@ function createRDAnalysis(
 
                     <tr>
 
-                        <th>Year</th>
+                        <th>
+                            ${t("year")}
+                        </th>
 
-                        <th>Deposited</th>
+                        <th>
+                            ${t("totalDeposited")}
+                        </th>
 
-                        <th>Interest</th>
+                        <th>
+                            ${t("interestPaid")}
+                        </th>
 
-                        <th>Balance</th>
+                        <th>
+                            ${t("balance")}
+                        </th>
 
                     </tr>
 
                 </thead>
 
+
                 <tbody>
-                    ${yearRows}
+
+                    ${rows}
+
                 </tbody>
 
             </table>
@@ -1040,6 +1752,7 @@ function createRDAnalysis(
         </div>
 
     `;
+
 
     section.appendChild(
         analysis
@@ -1060,12 +1773,14 @@ function calculateEMI() {
             ).value
         );
 
+
     const annualRate =
         parseFloat(
             document.getElementById(
                 "loanRate"
             ).value
         );
+
 
     let tenure =
         parseFloat(
@@ -1074,59 +1789,81 @@ function calculateEMI() {
             ).value
         );
 
+
     const tenureUnit =
         document.getElementById(
             "loanTenureUnit"
         ).value;
+
 
     const error =
         document.getElementById(
             "emiError"
         );
 
+
     error.textContent = "";
 
-    if (!validateNumber(
-        loanAmount,
-        "a loan amount",
-        error
-    )) {
+
+    if (
+        !validateNumber(
+            loanAmount,
+            t("loanField"),
+            error
+        )
+    ) {
         return;
     }
 
-    if (!validateRate(
-        annualRate,
-        error
-    )) {
+
+    if (
+        !validateRate(
+            annualRate,
+            error
+        )
+    ) {
         return;
     }
 
-    if (!validateNumber(
-        tenure,
-        "a loan tenure",
-        error
-    )) {
+
+    if (
+        !validateNumber(
+            tenure,
+            t("tenureField"),
+            error
+        )
+    ) {
         return;
     }
 
-    if (tenureUnit === "years") {
+
+    if (
+        tenureUnit === "years"
+    ) {
+
         tenure =
             tenure * 12;
     }
+
 
     const months =
         Math.round(
             tenure
         );
 
+
     const monthlyRate =
         annualRate /
         12 /
         100;
 
+
     let emi;
 
-    if (monthlyRate === 0) {
+
+    if (
+        monthlyRate === 0
+    ) {
 
         emi =
             loanAmount /
@@ -1140,32 +1877,44 @@ function calculateEMI() {
                 months
             );
 
+
         emi =
             loanAmount *
             monthlyRate *
             power /
-            (power - 1);
+            (
+                power - 1
+            );
     }
+
 
     const totalPayment =
         emi *
         months;
 
+
     const totalInterest =
         totalPayment -
         loanAmount;
 
-    if (!validateResult(
-        emi,
-        error
-    )) {
+
+    if (
+        !validateResult(
+            emi,
+            error
+        )
+    ) {
         return;
     }
+
 
     document.getElementById(
         "emiResult"
     ).textContent =
-        formatCurrency(emi);
+        formatCurrency(
+            emi
+        );
+
 
     document.getElementById(
         "emiInterestResult"
@@ -1174,12 +1923,14 @@ function calculateEMI() {
             totalInterest
         );
 
+
     document.getElementById(
         "emiTotalResult"
     ).textContent =
         formatCurrency(
             totalPayment
         );
+
 
     createEMIAnalysis(
         loanAmount,
@@ -1189,6 +1940,7 @@ function calculateEMI() {
         totalInterest,
         totalPayment
     );
+
 
     saveCalculatorValues();
 }
@@ -1211,26 +1963,32 @@ function createEMIAnalysis(
         "emiAnalysis"
     );
 
+
     const section =
         document.getElementById(
             "emiCalculator"
         );
 
+
     if (!section) {
         return;
     }
 
+
     let balance =
         loanAmount;
 
-    const yearData = [];
 
-    let yearRows = "";
+    const data = [];
+
+    let rows = "";
+
 
     const totalYears =
         Math.ceil(
             months / 12
         );
+
 
     for (
         let year = 1;
@@ -1239,10 +1997,13 @@ function createEMIAnalysis(
     ) {
 
         let yearlyPrincipal = 0;
+
         let yearlyInterest = 0;
+
 
         const startMonth =
             (year - 1) * 12 + 1;
+
 
         const endMonth =
             Math.min(
@@ -1250,15 +2011,19 @@ function createEMIAnalysis(
                 months
             );
 
+
         for (
             let month = startMonth;
             month <= endMonth;
             month++
         ) {
 
-            if (balance <= 0) {
+            if (
+                balance <= 0
+            ) {
                 break;
             }
+
 
             const monthlyInterest =
                 balance *
@@ -1266,38 +2031,50 @@ function createEMIAnalysis(
                 12 /
                 100;
 
+
             let monthlyPrincipal =
                 emi -
                 monthlyInterest;
+
 
             if (
                 monthlyPrincipal >
                 balance
             ) {
+
                 monthlyPrincipal =
                     balance;
             }
 
+
             balance -=
                 monthlyPrincipal;
 
-            if (balance < 0) {
+
+            if (
+                balance < 0
+            ) {
+
                 balance = 0;
             }
 
+
             yearlyPrincipal +=
                 monthlyPrincipal;
+
 
             yearlyInterest +=
                 monthlyInterest;
         }
 
-        yearData.push({
+
+        data.push({
             year: year,
             balance: balance
         });
 
-        yearRows += `
+
+        rows += `
 
             <tr>
 
@@ -1328,92 +2105,124 @@ function createEMIAnalysis(
         `;
     }
 
+
     const analysis =
         document.createElement(
             "div"
         );
 
+
     analysis.id =
         "emiAnalysis";
+
 
     analysis.className =
         "result-card";
 
-    analysis.style.marginTop =
-        "20px";
 
     analysis.innerHTML = `
 
-        <h3>📊 EMI Analysis</h3>
+        <h3>
+            ${t("emiAnalysis")}
+        </h3>
+
 
         <div class="analysis-summary">
 
             <div>
-                <small>Monthly EMI</small>
+
+                <small>
+                    ${t("monthlyEMI")}
+                </small>
+
                 <strong>
-                    ${formatCurrency(emi)}
+                    ${formatCurrency(
+                        emi
+                    )}
                 </strong>
+
             </div>
 
+
             <div>
-                <small>Yearly Payment</small>
+
+                <small>
+                    ${t("yearlyPayment")}
+                </small>
+
                 <strong>
                     ${formatCurrency(
                         emi * 12
                     )}
                 </strong>
+
             </div>
 
+
             <div>
-                <small>Total Interest</small>
+
+                <small>
+                    ${t("totalInterest")}
+                </small>
+
                 <strong>
                     ${formatCurrency(
                         totalInterest
                     )}
                 </strong>
+
             </div>
 
+
             <div>
-                <small>Total Payment</small>
+
+                <small>
+                    ${t("totalPayment")}
+                </small>
+
                 <strong>
                     ${formatCurrency(
                         totalPayment
                     )}
                 </strong>
+
             </div>
 
         </div>
 
 
         <div class="chart-title">
-            Principal vs Interest
+            ${t("principalVsInterest")}
         </div>
+
 
         ${createDonutChartHTML(
             loanAmount,
             totalInterest,
-            "Principal",
-            "Interest"
+            t("principal"),
+            t("interestLabel")
         )}
 
 
         <div class="chart-title">
-            Remaining Loan Balance
+            ${t("remainingLoan")}
         </div>
 
+
         ${createBarChartHTML(
-            yearData.map(
+            data.map(
                 item => item.year
             ),
-            yearData.map(
+            data.map(
                 item => item.balance
             )
         )}
 
 
         <h4>
-            Year-wise Breakdown
+            ${t("yearlyBreakdown")}
         </h4>
+
 
         <div class="table-scroll">
 
@@ -1423,20 +2232,31 @@ function createEMIAnalysis(
 
                     <tr>
 
-                        <th>Year</th>
+                        <th>
+                            ${t("year")}
+                        </th>
 
-                        <th>Principal Paid</th>
+                        <th>
+                            ${t("principalPaid")}
+                        </th>
 
-                        <th>Interest Paid</th>
+                        <th>
+                            ${t("interestPaid")}
+                        </th>
 
-                        <th>Balance</th>
+                        <th>
+                            ${t("balance")}
+                        </th>
 
                     </tr>
 
                 </thead>
 
+
                 <tbody>
-                    ${yearRows}
+
+                    ${rows}
+
                 </tbody>
 
             </table>
@@ -1445,6 +2265,7 @@ function createEMIAnalysis(
 
     `;
 
+
     section.appendChild(
         analysis
     );
@@ -1452,7 +2273,7 @@ function createEMIAnalysis(
 
 
 // ============================================================
-// CORRECTED DONUT CHART
+// DONUT CHART
 // ============================================================
 
 function createDonutChartHTML(
@@ -1466,6 +2287,7 @@ function createDonutChartHTML(
         value1 +
         value2;
 
+
     if (
         !Number.isFinite(total) ||
         total <= 0
@@ -1473,28 +2295,43 @@ function createDonutChartHTML(
         return "";
     }
 
+
     const percentage1 =
-        (value1 / total) * 100;
+        (
+            value1 /
+            total
+        ) *
+        100;
+
 
     const percentage2 =
-        (value2 / total) * 100;
+        (
+            value2 /
+            total
+        ) *
+        100;
+
 
     const radius = 58;
+
 
     const circumference =
         2 *
         Math.PI *
         radius;
 
+
     const dash1 =
         circumference *
         percentage1 /
         100;
 
+
     const dash2 =
         circumference *
         percentage2 /
         100;
+
 
     return `
 
@@ -1504,7 +2341,7 @@ function createDonutChartHTML(
                 display:flex;
                 flex-direction:column;
                 align-items:center;
-                margin:15px 0 20px 0;
+                margin:15px 0 20px;
             "
         >
 
@@ -1513,7 +2350,6 @@ function createDonutChartHTML(
                     position:relative;
                     width:210px;
                     height:210px;
-                    flex-shrink:0;
                 "
             >
 
@@ -1527,8 +2363,6 @@ function createDonutChartHTML(
                     "
                 >
 
-                    <!-- Background -->
-
                     <circle
                         cx="80"
                         cy="80"
@@ -1539,8 +2373,6 @@ function createDonutChartHTML(
                     ></circle>
 
 
-                    <!-- Principal -->
-
                     <circle
                         cx="80"
                         cy="80"
@@ -1548,16 +2380,12 @@ function createDonutChartHTML(
                         fill="none"
                         stroke="#2563eb"
                         stroke-width="26"
-                        stroke-linecap="butt"
                         stroke-dasharray="
                             ${dash1}
                             ${circumference - dash1}
                         "
-                        stroke-dashoffset="0"
                     ></circle>
 
-
-                    <!-- Interest -->
 
                     <circle
                         cx="80"
@@ -1566,7 +2394,6 @@ function createDonutChartHTML(
                         fill="none"
                         stroke="#f59e0b"
                         stroke-width="26"
-                        stroke-linecap="butt"
                         stroke-dasharray="
                             ${dash2}
                             ${circumference - dash2}
@@ -1577,14 +2404,13 @@ function createDonutChartHTML(
                 </svg>
 
 
-                <!-- Center -->
-
                 <div
                     style="
                         position:absolute;
                         left:50%;
                         top:50%;
-                        transform:translate(-50%,-50%);
+                        transform:
+                            translate(-50%,-50%);
                         width:100px;
                         height:100px;
                         border-radius:50%;
@@ -1606,6 +2432,7 @@ function createDonutChartHTML(
                         ${percentage1.toFixed(2)}%
                     </strong>
 
+
                     <span
                         style="
                             font-size:11px;
@@ -1620,8 +2447,6 @@ function createDonutChartHTML(
             </div>
 
 
-            <!-- Legend -->
-
             <div
                 style="
                     width:100%;
@@ -1634,40 +2459,16 @@ function createDonutChartHTML(
                     style="
                         display:flex;
                         justify-content:space-between;
-                        align-items:center;
                         padding:7px 4px;
+                        font-size:12px;
                     "
                 >
 
-                    <span
-                        style="
-                            display:flex;
-                            align-items:center;
-                            gap:7px;
-                            font-size:12px;
-                        "
-                    >
-
-                        <span
-                            style="
-                                width:11px;
-                                height:11px;
-                                border-radius:50%;
-                                background:#2563eb;
-                                display:inline-block;
-                            "
-                        ></span>
-
-                        ${escapeHTML(label1)}
-
+                    <span>
+                        🔵 ${escapeHTML(label1)}
                     </span>
 
-
-                    <strong
-                        style="
-                            font-size:12px;
-                        "
-                    >
+                    <strong>
                         ${formatCurrency(value1)}
                     </strong>
 
@@ -1678,40 +2479,16 @@ function createDonutChartHTML(
                     style="
                         display:flex;
                         justify-content:space-between;
-                        align-items:center;
                         padding:7px 4px;
+                        font-size:12px;
                     "
                 >
 
-                    <span
-                        style="
-                            display:flex;
-                            align-items:center;
-                            gap:7px;
-                            font-size:12px;
-                        "
-                    >
-
-                        <span
-                            style="
-                                width:11px;
-                                height:11px;
-                                border-radius:50%;
-                                background:#f59e0b;
-                                display:inline-block;
-                            "
-                        ></span>
-
-                        ${escapeHTML(label2)}
-
+                    <span>
+                        🟠 ${escapeHTML(label2)}
                     </span>
 
-
-                    <strong
-                        style="
-                            font-size:12px;
-                        "
-                    >
+                    <strong>
                         ${formatCurrency(value2)}
                     </strong>
 
@@ -1742,8 +2519,12 @@ function createBarChartHTML(
         return "";
     }
 
+
     const maxValue =
-        Math.max(...values);
+        Math.max(
+            ...values
+        );
+
 
     if (
         !Number.isFinite(maxValue) ||
@@ -1752,30 +2533,37 @@ function createBarChartHTML(
         return "";
     }
 
+
     let html = `
 
         <div
             style="
                 width:100%;
-                margin:15px 0 20px 0;
+                margin:15px 0 20px;
             "
         >
-
     `;
 
+
     labels.forEach(
-        function (label, index) {
+        function (
+            label,
+            index
+        ) {
 
             const value =
                 Number(
                     values[index]
                 ) || 0;
 
+
             const percentage =
                 (
                     value /
                     maxValue
-                ) * 100;
+                ) *
+                100;
+
 
             html += `
 
@@ -1816,7 +2604,6 @@ function createBarChartHTML(
                                     width:${percentage}%;
                                     height:100%;
                                     background:#2563eb;
-                                    border-radius:5px;
                                 "
                             ></div>
 
@@ -1842,1269 +2629,126 @@ function createBarChartHTML(
         }
     );
 
-    html += `</div>`;
 
-    return html;
-}
-
-
-// ============================================================
-// REMOVE ANALYSIS
-// ============================================================
-
-function removeAnalysis(id) {
-
-    const element =
-        document.getElementById(id);
-
-    if (element) {
-        element.remove();
-    }
-}
-
-
-// ============================================================
-// ACTION BUTTONS
-// ============================================================
-
-function setupActionButtons() {
-
-    addActionButtons(
-        "interestCalculator",
-        "interest"
-    );
-
-    addActionButtons(
-        "fdCalculator",
-        "fd"
-    );
-
-    addActionButtons(
-        "rdCalculator",
-        "rd"
-    );
-
-    addActionButtons(
-        "emiCalculator",
-        "emi"
-    );
-}
-
-
-function addActionButtons(
-    calculatorId,
-    calculatorType
-) {
-
-    const calculator =
-        document.getElementById(
-            calculatorId
-        );
-
-    if (!calculator) {
-        return;
-    }
-
-    if (
-        calculator.querySelector(
-            ".finance-action-buttons"
-        )
-    ) {
-        return;
-    }
-
-    const container =
-        document.createElement(
-            "div"
-        );
-
-    container.className =
-        "finance-action-buttons";
-
-    container.style.display =
-        "flex";
-
-    container.style.gap =
-        "10px";
-
-    container.style.marginTop =
-        "15px";
-
-    container.style.marginBottom =
-        "10px";
-
-    container.style.width =
-        "100%";
-
-    container.style.flexWrap =
-        "wrap";
-
-
-    // COPY
-
-    const copyButton =
-        document.createElement(
-            "button"
-        );
-
-    copyButton.type =
-        "button";
-
-    copyButton.textContent =
-        "📋 Copy Results";
-
-    copyButton.style.flex =
-        "1";
-
-    copyButton.style.minWidth =
-        "120px";
-
-    copyButton.style.padding =
-        "10px";
-
-    copyButton.style.cursor =
-        "pointer";
-
-    copyButton.style.borderRadius =
-        "8px";
-
-    copyButton.style.border =
-        "1px solid #d8dee8";
-
-    copyButton.style.background =
-        "#ffffff";
-
-    copyButton.style.color =
-        "#111111";
-
-    copyButton.addEventListener(
-        "click",
-        function () {
-
-            copyResults(
-                calculatorType,
-                copyButton
-            );
-
-        }
-    );
-
-
-    // WHATSAPP
-
-    const whatsappButton =
-        document.createElement(
-            "button"
-        );
-
-    whatsappButton.type =
-        "button";
-
-    whatsappButton.textContent =
-        "📱 WhatsApp";
-
-    whatsappButton.style.flex =
-        "1";
-
-    whatsappButton.style.minWidth =
-        "120px";
-
-    whatsappButton.style.padding =
-        "10px";
-
-    whatsappButton.style.cursor =
-        "pointer";
-
-    whatsappButton.style.borderRadius =
-        "8px";
-
-    whatsappButton.style.border =
-        "1px solid #25D366";
-
-    whatsappButton.style.background =
-        "#25D366";
-
-    whatsappButton.style.color =
-        "#ffffff";
-
-    whatsappButton.addEventListener(
-        "click",
-        function () {
-
-            shareOnWhatsApp(
-                calculatorType
-            );
-
-        }
-    );
-
-
-    // PDF
-
-    const pdfButton =
-        document.createElement(
-            "button"
-        );
-
-    pdfButton.type =
-        "button";
-
-    pdfButton.textContent =
-        "📄 Save PDF";
-
-    pdfButton.style.flex =
-        "1";
-
-    pdfButton.style.minWidth =
-        "120px";
-
-    pdfButton.style.padding =
-        "10px";
-
-    pdfButton.style.cursor =
-        "pointer";
-
-    pdfButton.style.borderRadius =
-        "8px";
-
-    pdfButton.style.border =
-        "1px solid #6b7280";
-
-    pdfButton.style.background =
-        "#f3f4f6";
-
-    pdfButton.style.color =
-        "#111111";
-
-    pdfButton.addEventListener(
-        "click",
-        function () {
-
-            downloadPDF(
-                calculatorType
-            );
-
-        }
-    );
-
-
-    container.appendChild(
-        copyButton
-    );
-
-    container.appendChild(
-        whatsappButton
-    );
-
-    container.appendChild(
-        pdfButton
-    );
-
-    calculator.appendChild(
-        container
-    );
-}
-
-
-// ============================================================
-// RESULT TEXT
-// ============================================================
-
-function getResultText(type) {
-
-    let text =
-        "Finance App by Surendra\n\n";
-
-
-    if (type === "interest") {
-
-        text +=
-            "Interest Calculator\n\n";
-
-        text +=
-            "Principal: ₹" +
-            getValue("principal") +
-            "\n";
-
-        text +=
-            "Interest Rate: " +
-            getValue("rate") +
-            "%\n";
-
-        text +=
-            "Period: " +
-            getValue("time") +
-            " " +
-            getSelectedText("timeUnit") +
-            "\n";
-
-        text +=
-            "Interest Type: " +
-            getSelectedText("interestType") +
-            "\n\n";
-
-        text +=
-            "Interest: " +
-            getText("interestResult") +
-            "\n";
-
-        text +=
-            "Total Amount: " +
-            getText("totalResult") +
-            "\n";
-    }
-
-
-    else if (type === "fd") {
-
-        text +=
-            "FD Calculator\n\n";
-
-        text +=
-            "Deposit Amount: ₹" +
-            getValue("fdPrincipal") +
-            "\n";
-
-        text +=
-            "Interest Rate: " +
-            getValue("fdRate") +
-            "%\n";
-
-        text +=
-            "Period: " +
-            getValue("fdTime") +
-            " Years\n";
-
-        text +=
-            "Compounding: " +
-            getSelectedText("fdFrequency") +
-            "\n\n";
-
-        text +=
-            "Interest Earned: " +
-            getText("fdInterestResult") +
-            "\n";
-
-        text +=
-            "Maturity Amount: " +
-            getText("fdTotalResult") +
-            "\n";
-    }
-
-
-    else if (type === "rd") {
-
-        text +=
-            "RD Calculator\n\n";
-
-        text +=
-            "Monthly Deposit: ₹" +
-            getValue("rdMonthlyDeposit") +
-            "\n";
-
-        text +=
-            "Interest Rate: " +
-            getValue("rdRate") +
-            "%\n";
-
-        text +=
-            "Period: " +
-            getValue("rdTime") +
-            " Years\n\n";
-
-        text +=
-            "Total Deposited: " +
-            getText("rdDepositedResult") +
-            "\n";
-
-        text +=
-            "Interest Earned: " +
-            getText("rdInterestResult") +
-            "\n";
-
-        text +=
-            "Maturity Amount: " +
-            getText("rdTotalResult") +
-            "\n";
-    }
-
-
-    else if (type === "emi") {
-
-        text +=
-            "EMI Calculator\n\n";
-
-        text +=
-            "Loan Amount: ₹" +
-            getValue("loanAmount") +
-            "\n";
-
-        text +=
-            "Interest Rate: " +
-            getValue("loanRate") +
-            "%\n";
-
-        text +=
-            "Tenure: " +
-            getValue("loanTenure") +
-            " " +
-            getSelectedText("loanTenureUnit") +
-            "\n\n";
-
-        text +=
-            "Monthly EMI: " +
-            getText("emiResult") +
-            "\n";
-
-        text +=
-            "Total Interest: " +
-            getText("emiInterestResult") +
-            "\n";
-
-        text +=
-            "Total Payment: " +
-            getText("emiTotalResult") +
-            "\n";
-    }
-
-
-    text +=
-        "\nCalculated using Finance App by Surendra.";
-
-    return text;
-}
-
-
-// ============================================================
-// COPY
-// ============================================================
-
-async function copyResults(
-    type,
-    button
-) {
-
-    const text =
-        getResultText(type);
-
-    try {
-
-        if (
-            navigator.clipboard &&
-            window.isSecureContext
-        ) {
-
-            await navigator.clipboard.writeText(
-                text
-            );
-
-        } else {
-
-            fallbackCopy(text);
-
-        }
-
-        const originalText =
-            button.textContent;
-
-        button.textContent =
-            "✅ Copied!";
-
-        setTimeout(
-            function () {
-
-                button.textContent =
-                    originalText;
-
-            },
-            2000
-        );
-
-    } catch (error) {
-
-        fallbackCopy(text);
-
-    }
-}
-
-
-function fallbackCopy(text) {
-
-    const textarea =
-        document.createElement(
-            "textarea"
-        );
-
-    textarea.value =
-        text;
-
-    textarea.style.position =
-        "fixed";
-
-    textarea.style.left =
-        "-9999px";
-
-    document.body.appendChild(
-        textarea
-    );
-
-    textarea.focus();
-    textarea.select();
-
-    try {
-        document.execCommand("copy");
-    } catch (error) {
-        console.log("Copy failed.");
-    }
-
-    document.body.removeChild(
-        textarea
-    );
-}
-
-
-// ============================================================
-// WHATSAPP
-// ============================================================
-
-function shareOnWhatsApp(type) {
-
-    const text =
-        getResultText(type);
-
-    const url =
-        "https://wa.me/?text=" +
-        encodeURIComponent(text);
-
-    window.open(
-        url,
-        "_blank"
-    );
-}
-
-
-// ============================================================
-// PDF
-// ============================================================
-
-function downloadPDF(type) {
-
-    const calculator =
-        getCalculatorElement(type);
-
-    if (!calculator) {
-        alert(
-            "Calculator could not be found."
-        );
-        return;
-    }
-
-    const printWindow =
-        window.open(
-            "",
-            "_blank"
-        );
-
-    if (!printWindow) {
-
-        alert(
-            "Please allow pop-ups for this Finance App to save the PDF."
-        );
-
-        return;
-    }
-
-    const title =
-        getCalculatorTitle(type);
-
-    const date =
-        new Date().toLocaleString(
-            "en-IN"
-        );
-
-    const content =
-        createPrintableContent(
-            type
-        );
-
-    printWindow.document.open();
-
-    printWindow.document.write(`
-
-<!DOCTYPE html>
-
-<html>
-
-<head>
-
-<meta charset="UTF-8">
-
-<title>
-${title} - Finance App by Surendra
-</title>
-
-<style>
-
-* {
-    box-sizing:border-box;
-}
-
-body {
-    font-family:Arial,Helvetica,sans-serif;
-    margin:0;
-    padding:30px;
-    color:#111827;
-    background:white;
-}
-
-.pdf-container {
-    max-width:850px;
-    margin:0 auto;
-}
-
-.pdf-header {
-    text-align:center;
-    border-bottom:2px solid #333;
-    padding-bottom:15px;
-    margin-bottom:20px;
-}
-
-.pdf-header h1 {
-    margin:0 0 8px 0;
-    font-size:24px;
-}
-
-.pdf-header h2 {
-    margin:0;
-    font-size:18px;
-    font-weight:normal;
-}
-
-.pdf-date {
-    margin-top:8px;
-    font-size:12px;
-    color:#666;
-}
-
-.pdf-section {
-    border:1px solid #ddd;
-    border-radius:8px;
-    padding:15px;
-    margin-bottom:18px;
-}
-
-.pdf-section h3 {
-    margin-top:0;
-    border-bottom:1px solid #ddd;
-    padding-bottom:8px;
-}
-
-.pdf-row {
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-    padding:7px 0;
-    border-bottom:1px solid #f0f0f0;
-}
-
-.pdf-label {
-    font-weight:600;
-}
-
-.pdf-value {
-    text-align:right;
-}
-
-table {
-    width:100%;
-    border-collapse:collapse;
-    margin-top:10px;
-}
-
-th,
-td {
-    border:1px solid #ccc;
-    padding:8px;
-    text-align:right;
-}
-
-th:first-child,
-td:first-child {
-    text-align:center;
-}
-
-th {
-    background:#f3f4f6;
-}
-
-.pdf-footer {
-    text-align:center;
-    margin-top:30px;
-    padding-top:15px;
-    border-top:1px solid #ddd;
-    font-size:12px;
-    color:#666;
-}
-
-@media print {
-
-    body {
-        padding:10px;
-    }
-
-    .pdf-section {
-        break-inside:avoid;
-    }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="pdf-container">
-
-    <div class="pdf-header">
-
-        <h1>
-            Finance App by Surendra
-        </h1>
-
-        <h2>
-            ${title}
-        </h2>
-
-        <div class="pdf-date">
-            Generated: ${date}
+    html += `
         </div>
-
-    </div>
-
-    ${content}
-
-    <div class="pdf-footer">
-        Finance App by Surendra
-    </div>
-
-</div>
-
-</body>
-
-</html>
-
-    `);
-
-    printWindow.document.close();
-
-    setTimeout(
-        function () {
-
-            printWindow.focus();
-
-            printWindow.print();
-
-        },
-        500
-    );
-}
-
-
-// ============================================================
-// PDF CONTENT
-// ============================================================
-
-function createPrintableContent(type) {
-
-    let html = "";
-
-
-    if (type === "interest") {
-
-        html += `
-
-        <div class="pdf-section">
-
-            <h3>
-                Calculation Details
-            </h3>
-
-            ${pdfRow(
-                "Principal",
-                "₹" +
-                getValue("principal")
-            )}
-
-            ${pdfRow(
-                "Interest Rate",
-                getValue("rate") + "%"
-            )}
-
-            ${pdfRow(
-                "Period",
-                getValue("time") +
-                " " +
-                getSelectedText("timeUnit")
-            )}
-
-            ${pdfRow(
-                "Interest Type",
-                getSelectedText(
-                    "interestType"
-                )
-            )}
-
-        </div>
-
-
-        <div class="pdf-section">
-
-            <h3>
-                Results
-            </h3>
-
-            ${pdfRow(
-                "Interest",
-                getText(
-                    "interestResult"
-                )
-            )}
-
-            ${pdfRow(
-                "Total Amount",
-                getText(
-                    "totalResult"
-                )
-            )}
-
-        </div>
-
-        `;
-    }
-
-
-    else if (type === "fd") {
-
-        html += `
-
-        <div class="pdf-section">
-
-            <h3>
-                Calculation Details
-            </h3>
-
-            ${pdfRow(
-                "Deposit Amount",
-                "₹" +
-                getValue("fdPrincipal")
-            )}
-
-            ${pdfRow(
-                "Interest Rate",
-                getValue("fdRate") + "%"
-            )}
-
-            ${pdfRow(
-                "Period",
-                getValue("fdTime") +
-                " Years"
-            )}
-
-        </div>
-
-
-        <div class="pdf-section">
-
-            <h3>
-                Results
-            </h3>
-
-            ${pdfRow(
-                "Interest Earned",
-                getText(
-                    "fdInterestResult"
-                )
-            )}
-
-            ${pdfRow(
-                "Maturity Amount",
-                getText(
-                    "fdTotalResult"
-                )
-            )}
-
-        </div>
-
-        `;
-    }
-
-
-    else if (type === "rd") {
-
-        html += `
-
-        <div class="pdf-section">
-
-            <h3>
-                Calculation Details
-            </h3>
-
-            ${pdfRow(
-                "Monthly Deposit",
-                "₹" +
-                getValue(
-                    "rdMonthlyDeposit"
-                )
-            )}
-
-            ${pdfRow(
-                "Interest Rate",
-                getValue(
-                    "rdRate"
-                ) + "%"
-            )}
-
-            ${pdfRow(
-                "Period",
-                getValue(
-                    "rdTime"
-                ) + " Years"
-            )}
-
-        </div>
-
-
-        <div class="pdf-section">
-
-            <h3>
-                Results
-            </h3>
-
-            ${pdfRow(
-                "Total Deposited",
-                getText(
-                    "rdDepositedResult"
-                )
-            )}
-
-            ${pdfRow(
-                "Interest Earned",
-                getText(
-                    "rdInterestResult"
-                )
-            )}
-
-            ${pdfRow(
-                "Maturity Amount",
-                getText(
-                    "rdTotalResult"
-                )
-            )}
-
-        </div>
-
-        `;
-    }
-
-
-    else if (type === "emi") {
-
-        html += `
-
-        <div class="pdf-section">
-
-            <h3>
-                Calculation Details
-            </h3>
-
-            ${pdfRow(
-                "Loan Amount",
-                "₹" +
-                getValue(
-                    "loanAmount"
-                )
-            )}
-
-            ${pdfRow(
-                "Interest Rate",
-                getValue(
-                    "loanRate"
-                ) + "%"
-            )}
-
-            ${pdfRow(
-                "Tenure",
-                getValue(
-                    "loanTenure"
-                ) +
-                " " +
-                getSelectedText(
-                    "loanTenureUnit"
-                )
-            )}
-
-        </div>
-
-
-        <div class="pdf-section">
-
-            <h3>
-                Results
-            </h3>
-
-            ${pdfRow(
-                "Monthly EMI",
-                getText(
-                    "emiResult"
-                )
-            )}
-
-            ${pdfRow(
-                "Total Interest",
-                getText(
-                    "emiInterestResult"
-                )
-            )}
-
-            ${pdfRow(
-                "Total Payment",
-                getText(
-                    "emiTotalResult"
-                )
-            )}
-
-        </div>
-
-        `;
-    }
-
-
-    return html;
-}
-
-
-function pdfRow(
-    label,
-    value
-) {
-
-    return `
-
-        <div class="pdf-row">
-
-            <div class="pdf-label">
-                ${escapeHTML(label)}
-            </div>
-
-            <div class="pdf-value">
-                ${escapeHTML(value)}
-            </div>
-
-        </div>
-
     `;
+
+
+    return html;
 }
 
 
 // ============================================================
-// RESET
+// TABS
 // ============================================================
 
-function resetCalculator(type) {
+function setupTabs() {
 
-    let ids = [];
+    document
+        .querySelectorAll(
+            ".tab-button"
+        )
+        .forEach(
+            function (tab) {
 
+                tab.addEventListener(
+                    "click",
+                    function () {
 
-    if (type === "interest") {
+                        showCalculator(
+                            tab.dataset.calculator
+                        );
 
-        ids = [
-            "principal",
-            "rate",
-            "time"
-        ];
+                    }
+                );
 
-        setValue(
-            "interestType",
-            "simple"
+            }
         );
-
-        setValue(
-            "timeUnit",
-            "years"
-        );
-
-        setValue(
-            "compoundFrequency",
-            "1"
-        );
-
-        setText(
-            "interestResult",
-            "₹0.00"
-        );
-
-        setText(
-            "totalResult",
-            "₹0.00"
-        );
-
-        clearError(
-            "interestError"
-        );
-
-        removeAnalysis(
-            "interestAnalysis"
-        );
-    }
+}
 
 
-    if (type === "fd") {
+// ============================================================
+// ENTER KEY
+// ============================================================
 
-        ids = [
-            "fdPrincipal",
-            "fdRate",
-            "fdTime"
-        ];
+function setupEnterKey() {
 
-        setValue(
-            "fdFrequency",
-            "1"
-        );
+    document.addEventListener(
+        "keydown",
+        function (event) {
 
-        setText(
-            "fdInterestResult",
-            "₹0.00"
-        );
-
-        setText(
-            "fdTotalResult",
-            "₹0.00"
-        );
-
-        clearError(
-            "fdError"
-        );
-
-        removeAnalysis(
-            "fdAnalysis"
-        );
-    }
+            if (
+                event.key !== "Enter"
+            ) {
+                return;
+            }
 
 
-    if (type === "rd") {
-
-        ids = [
-            "rdMonthlyDeposit",
-            "rdRate",
-            "rdTime"
-        ];
-
-        setText(
-            "rdDepositedResult",
-            "₹0.00"
-        );
-
-        setText(
-            "rdInterestResult",
-            "₹0.00"
-        );
-
-        setText(
-            "rdTotalResult",
-            "₹0.00"
-        );
-
-        clearError(
-            "rdError"
-        );
-
-        removeAnalysis(
-            "rdAnalysis"
-        );
-    }
+            if (
+                event.target &&
+                event.target.tagName ===
+                "TEXTAREA"
+            ) {
+                return;
+            }
 
 
-    if (type === "emi") {
-
-        ids = [
-            "loanAmount",
-            "loanRate",
-            "loanTenure"
-        ];
-
-        setValue(
-            "loanTenureUnit",
-            "years"
-        );
-
-        setText(
-            "emiResult",
-            "₹0.00"
-        );
-
-        setText(
-            "emiInterestResult",
-            "₹0.00"
-        );
-
-        setText(
-            "emiTotalResult",
-            "₹0.00"
-        );
-
-        clearError(
-            "emiError"
-        );
-
-        removeAnalysis(
-            "emiAnalysis"
-        );
-    }
+            const activeCalculator =
+                document.querySelector(
+                    ".calculator-card:not(.hidden)"
+                );
 
 
-    ids.forEach(
-        function (id) {
+            if (!activeCalculator) {
+                return;
+            }
 
-            const element =
-                document.getElementById(id);
 
-            if (element) {
-                element.value = "";
+            if (
+                activeCalculator.id ===
+                "interestCalculator"
+            ) {
+
+                calculateInterest();
+
+            }
+
+            else if (
+                activeCalculator.id ===
+                "fdCalculator"
+            ) {
+
+                calculateFD();
+
+            }
+
+            else if (
+                activeCalculator.id ===
+                "rdCalculator"
+            ) {
+
+                calculateRD();
+
+            }
+
+            else if (
+                activeCalculator.id ===
+                "emiCalculator"
+            ) {
+
+                calculateEMI();
+
             }
 
         }
     );
-
-    saveCalculatorValues();
 }
 
 
 // ============================================================
 // HELPERS
 // ============================================================
-
-function setText(id, value) {
-
-    const element =
-        document.getElementById(id);
-
-    if (element) {
-        element.textContent = value;
-    }
-}
-
-
-function setValue(id, value) {
-
-    const element =
-        document.getElementById(id);
-
-    if (element) {
-        element.value = value;
-    }
-}
-
 
 function getValue(id) {
 
@@ -3133,13 +2777,13 @@ function getSelectedText(id) {
     const element =
         document.getElementById(id);
 
-    if (!element) {
+    if (
+        !element ||
+        !element.options
+    ) {
         return "";
     }
 
-    if (element.selectedIndex < 0) {
-        return element.value;
-    }
 
     return element.options[
         element.selectedIndex
@@ -3149,81 +2793,584 @@ function getSelectedText(id) {
 
 function escapeHTML(value) {
 
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return String(
+        value ?? ""
+    ).replace(
+        /[&<>'"]/g,
+        function (character) {
+
+            return {
+
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "'": "&#39;",
+                '"': "&quot;"
+
+            }[character];
+
+        }
+    );
 }
 
 
 // ============================================================
-// ENTER TO CALCULATE
+// RESULT TEXT
 // ============================================================
 
-function setupEnterKey() {
+function getResultText(type) {
 
-    document.addEventListener(
-        "keydown",
-        function (event) {
+    let text =
+        "Finance App by Surendra\n\n";
 
-            if (
-                event.key !== "Enter"
-            ) {
+
+    if (
+        type === "interest"
+    ) {
+
+        text +=
+            `${t("interestCalculator")}\n\n`;
+
+        text +=
+            `${t("principal")}: ₹${getValue("principal")}\n`;
+
+        text +=
+            `${t("interestRate")}: ${getValue("rate")}%\n`;
+
+        text +=
+            `${t("period")}: ${getValue("time")} ${getSelectedText("timeUnit")}\n`;
+
+        text +=
+            `${t("interestType")}: ${getSelectedText("interestType")}\n\n`;
+
+        text +=
+            `${t("interest")}: ${getText("interestResult")}\n`;
+
+        text +=
+            `${t("totalAmount")}: ${getText("totalResult")}`;
+
+    }
+
+
+    else if (
+        type === "fd"
+    ) {
+
+        text +=
+            `${t("fdCalculator")}\n\n`;
+
+        text +=
+            `${t("depositAmount")}: ₹${getValue("fdPrincipal")}\n`;
+
+        text +=
+            `${t("interestRate")}: ${getValue("fdRate")}%\n`;
+
+        text +=
+            `${t("period")}: ${getValue("fdTime")} ${t("years")}\n\n`;
+
+        text +=
+            `${t("interestEarned")}: ${getText("fdInterestResult")}\n`;
+
+        text +=
+            `${t("maturityAmount")}: ${getText("fdTotalResult")}`;
+
+    }
+
+
+    else if (
+        type === "rd"
+    ) {
+
+        text +=
+            `${t("rdCalculator")}\n\n`;
+
+        text +=
+            `${t("monthlyDeposit")}: ₹${getValue("rdMonthlyDeposit")}\n`;
+
+        text +=
+            `${t("interestRate")}: ${getValue("rdRate")}%\n`;
+
+        text +=
+            `${t("period")}: ${getValue("rdTime")} ${t("years")}\n\n`;
+
+        text +=
+            `${t("totalDeposited")}: ${getText("rdDepositedResult")}\n`;
+
+        text +=
+            `${t("interestEarned")}: ${getText("rdInterestResult")}\n`;
+
+        text +=
+            `${t("maturityAmount")}: ${getText("rdTotalResult")}`;
+
+    }
+
+
+    else if (
+        type === "emi"
+    ) {
+
+        text +=
+            `${t("emiCalculator")}\n\n`;
+
+        text +=
+            `${t("loanAmount")}: ₹${getValue("loanAmount")}\n`;
+
+        text +=
+            `${t("interestRate")}: ${getValue("loanRate")}%\n`;
+
+        text +=
+            `${t("tenure")}: ${getValue("loanTenure")} ${getSelectedText("loanTenureUnit")}\n\n`;
+
+        text +=
+            `${t("monthlyEMI")}: ${getText("emiResult")}\n`;
+
+        text +=
+            `${t("totalInterest")}: ${getText("emiInterestResult")}\n`;
+
+        text +=
+            `${t("totalPayment")}: ${getText("emiTotalResult")}`;
+
+    }
+
+
+    text +=
+        `\n\n${t("calculatedUsing")}`;
+
+
+    return text;
+}
+
+
+// ============================================================
+// COPY RESULTS
+// ============================================================
+
+function copyResults(
+    type,
+    button
+) {
+
+    const text =
+        getResultText(type);
+
+
+    const copied =
+        function () {
+
+            const original =
+                button.textContent;
+
+
+            button.textContent =
+                t("copied");
+
+
+            setTimeout(
+                function () {
+
+                    button.textContent =
+                        original;
+
+                },
+                2000
+            );
+
+        };
+
+
+    if (
+        navigator.clipboard &&
+        window.isSecureContext
+    ) {
+
+        navigator.clipboard
+            .writeText(text)
+            .then(copied)
+            .catch(
+                function () {
+
+                    fallbackCopy(
+                        text,
+                        copied
+                    );
+
+                }
+            );
+
+    } else {
+
+        fallbackCopy(
+            text,
+            copied
+        );
+    }
+}
+
+
+function fallbackCopy(
+    text,
+    callback
+) {
+
+    const textarea =
+        document.createElement(
+            "textarea"
+        );
+
+
+    textarea.value =
+        text;
+
+
+    textarea.style.position =
+        "fixed";
+
+
+    textarea.style.left =
+        "-9999px";
+
+
+    document.body.appendChild(
+        textarea
+    );
+
+
+    textarea.focus();
+
+    textarea.select();
+
+
+    try {
+
+        document.execCommand(
+            "copy"
+        );
+
+    } catch (error) {
+
+        console.log(
+            "Copy failed."
+        );
+
+    }
+
+
+    document.body.removeChild(
+        textarea
+    );
+
+
+    if (callback) {
+        callback();
+    }
+}
+
+
+// ============================================================
+// WHATSAPP
+// ============================================================
+
+function shareOnWhatsApp(type) {
+
+    const text =
+        getResultText(type);
+
+
+    const url =
+        "https://wa.me/?text=" +
+        encodeURIComponent(text);
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+}
+
+
+// ============================================================
+// ACTION BUTTONS
+// ============================================================
+
+function setupActionButtons() {
+
+    addActionButtons(
+        "interest"
+    );
+
+    addActionButtons(
+        "fd"
+    );
+
+    addActionButtons(
+        "rd"
+    );
+
+    addActionButtons(
+        "emi"
+    );
+}
+
+
+function addActionButtons(
+    type
+) {
+
+    const calculator =
+        document.getElementById(
+            type + "Calculator"
+        );
+
+
+    if (!calculator) {
+        return;
+    }
+
+
+    if (
+        calculator.querySelector(
+            ".finance-action-buttons"
+        )
+    ) {
+        return;
+    }
+
+
+    const container =
+        document.createElement(
+            "div"
+        );
+
+
+    container.className =
+        "finance-action-buttons";
+
+
+    const copyButton =
+        document.createElement(
+            "button"
+        );
+
+
+    copyButton.type =
+        "button";
+
+
+    copyButton.textContent =
+        t("copyResults");
+
+
+    copyButton.addEventListener(
+        "click",
+        function () {
+
+            copyResults(
+                type,
+                copyButton
+            );
+
+        }
+    );
+
+
+    const whatsappButton =
+        document.createElement(
+            "button"
+        );
+
+
+    whatsappButton.type =
+        "button";
+
+
+    whatsappButton.textContent =
+        t("whatsapp");
+
+
+    whatsappButton.addEventListener(
+        "click",
+        function () {
+
+            shareOnWhatsApp(
+                type
+            );
+
+        }
+    );
+
+
+    const pdfButton =
+        document.createElement(
+            "button"
+        );
+
+
+    pdfButton.type =
+        "button";
+
+
+    pdfButton.textContent =
+        t("savePDF");
+
+
+    pdfButton.addEventListener(
+        "click",
+        function () {
+
+            downloadPDF(
+                type
+            );
+
+        }
+    );
+
+
+    container.appendChild(
+        copyButton
+    );
+
+
+    container.appendChild(
+        whatsappButton
+    );
+
+
+    container.appendChild(
+        pdfButton
+    );
+
+
+    calculator.appendChild(
+        container
+    );
+}
+
+
+function updateActionButtonText() {
+
+    document
+        .querySelectorAll(
+            ".finance-action-buttons"
+        )
+        .forEach(
+            function (container) {
+
+                const buttons =
+                    container.querySelectorAll(
+                        "button"
+                    );
+
+
+                if (buttons[0]) {
+                    buttons[0].textContent =
+                        t("copyResults");
+                }
+
+
+                if (buttons[1]) {
+                    buttons[1].textContent =
+                        t("whatsapp");
+                }
+
+
+                if (buttons[2]) {
+                    buttons[2].textContent =
+                        t("savePDF");
+                }
+
+            }
+        );
+}
+
+
+// ============================================================
+// RESET
+// ============================================================
+
+function resetCalculator(
+    type
+) {
+
+    const fields = {
+
+        interest: [
+            "principal",
+            "rate",
+            "time",
+            "interestResult",
+            "totalResult",
+            "interestError"
+        ],
+
+        fd: [
+            "fdPrincipal",
+            "fdRate",
+            "fdTime",
+            "fdInterestResult",
+            "fdTotalResult",
+            "fdError"
+        ],
+
+        rd: [
+            "rdMonthlyDeposit",
+            "rdRate",
+            "rdTime",
+            "rdDepositedResult",
+            "rdInterestResult",
+            "rdTotalResult",
+            "rdError"
+        ],
+
+        emi: [
+            "loanAmount",
+            "loanRate",
+            "loanTenure",
+            "emiResult",
+            "emiInterestResult",
+            "emiTotalResult",
+            "emiError"
+        ]
+
+    };
+
+
+    (
+        fields[type] || []
+    ).forEach(
+        function (id) {
+
+            const element =
+                document.getElementById(id);
+
+
+            if (!element) {
                 return;
             }
 
-            if (
-                event.target &&
-                event.target.tagName ===
-                "TEXTAREA"
-            ) {
-                return;
-            }
-
-            const activeCalculator =
-                document.querySelector(
-                    ".calculator-card:not(.hidden)"
-                );
-
-            if (!activeCalculator) {
-                return;
-            }
-
-            const id =
-                activeCalculator.id;
 
             if (
-                id ===
-                "interestCalculator"
+                element.tagName ===
+                "INPUT"
             ) {
-                calculateInterest();
-            }
 
-            else if (
-                id ===
-                "fdCalculator"
-            ) {
-                calculateFD();
-            }
+                element.value = "";
 
-            else if (
-                id ===
-                "rdCalculator"
-            ) {
-                calculateRD();
-            }
+            } else {
 
-            else if (
-                id ===
-                "emiCalculator"
-            ) {
-                calculateEMI();
+                element.textContent = "";
+
             }
 
         }
     );
+
+
+    removeAnalysis(
+        type + "Analysis"
+    );
+
+
+    saveCalculatorValues();
 }
 
 
@@ -3258,7 +3405,9 @@ function saveCalculatorValues() {
 
     ];
 
+
     const values = {};
+
 
     ids.forEach(
         function (id) {
@@ -3266,13 +3415,17 @@ function saveCalculatorValues() {
             const element =
                 document.getElementById(id);
 
+
             if (element) {
+
                 values[id] =
                     element.value;
+
             }
 
         }
     );
+
 
     localStorage.setItem(
         "financeCalculatorValues",
@@ -3287,33 +3440,33 @@ function saveCalculatorValues() {
 
 function loadSavedValues() {
 
-    const saved =
-        localStorage.getItem(
-            "financeCalculatorValues"
-        );
-
-    if (!saved) {
-        return;
-    }
-
     try {
 
-        const values =
-            JSON.parse(saved);
+        const saved =
+            JSON.parse(
+                localStorage.getItem(
+                    "financeCalculatorValues"
+                ) || "{}"
+            );
 
-        Object.keys(values).forEach(
-            function (id) {
+
+        Object.entries(
+            saved
+        ).forEach(
+            function (
+                [id, value]
+            ) {
 
                 const element =
-                    document.getElementById(id);
+                    document.getElementById(
+                        id
+                    );
 
-                if (
-                    element &&
-                    values[id] !== undefined
-                ) {
+
+                if (element) {
 
                     element.value =
-                        values[id];
+                        value;
 
                 }
 
@@ -3341,32 +3494,30 @@ function loadTheme() {
             "financeCalculatorTheme"
         );
 
-    if (
+
+    const theme =
         savedTheme === "dark"
-    ) {
+            ? "dark"
+            : "light";
 
-        document.documentElement
-            .setAttribute(
-                "data-theme",
-                "dark"
-            );
 
-        updateThemeIcon(
-            "dark"
+    document.documentElement
+        .setAttribute(
+            "data-theme",
+            theme
         );
 
-    } else {
 
-        updateThemeIcon(
-            "light"
-        );
+    updateThemeIcon(
+        theme
+    );
 
-    }
 
     const themeButton =
         document.getElementById(
             "themeToggle"
         );
+
 
     if (themeButton) {
 
@@ -3381,101 +3532,501 @@ function loadTheme() {
 
 function toggleTheme() {
 
-    const currentTheme =
+    const current =
         document.documentElement
             .getAttribute(
                 "data-theme"
             );
 
-    if (
-        currentTheme === "dark"
-    ) {
 
-        document.documentElement
-            .removeAttribute(
-                "data-theme"
-            );
+    const theme =
+        current === "dark"
+            ? "light"
+            : "dark";
 
-        localStorage.setItem(
-            "financeCalculatorTheme",
-            "light"
+
+    document.documentElement
+        .setAttribute(
+            "data-theme",
+            theme
         );
 
-        updateThemeIcon(
-            "light"
-        );
 
-    } else {
+    localStorage.setItem(
+        "financeCalculatorTheme",
+        theme
+    );
 
-        document.documentElement
-            .setAttribute(
-                "data-theme",
-                "dark"
-            );
 
-        localStorage.setItem(
-            "financeCalculatorTheme",
-            "dark"
-        );
-
-        updateThemeIcon(
-            "dark"
-        );
-
-    }
+    updateThemeIcon(
+        theme
+    );
 }
 
 
-function updateThemeIcon(theme) {
+function updateThemeIcon(
+    theme
+) {
 
     const button =
         document.getElementById(
             "themeToggle"
         );
 
+
     if (!button) {
         return;
     }
+
 
     button.textContent =
         theme === "dark"
             ? "☀️"
             : "🌙";
 }
-// ==========================================================
-// SAVE PDF
-// ==========================================================
 
-function saveCalculatorAsPDF() {
 
-    const activeCalculator =
-        document.querySelector(
-            ".calculator-card:not(.hidden)"
+// ============================================================
+// LANGUAGE SUPPORT
+// ============================================================
+
+function applyLanguage() {
+
+    document.documentElement.lang =
+        currentLanguage === "te"
+            ? "te"
+            : "en";
+
+
+    const languageSelect =
+        document.getElementById(
+            "languageSelect"
         );
 
-    if (!activeCalculator) {
-        alert("Please select a calculator first.");
+
+    if (languageSelect) {
+
+        languageSelect.value =
+            currentLanguage;
+
+    }
+
+
+    const textMap = {
+
+        ".app-title":
+            "appTitle",
+
+        ".app-subtitle":
+            "by",
+
+        ".tab-button[data-calculator='interest']":
+            "interest",
+
+        ".tab-button[data-calculator='fd']":
+            "fd",
+
+        ".tab-button[data-calculator='rd']":
+            "rd",
+
+        ".tab-button[data-calculator='emi']":
+            "emi",
+
+        "#interestCalculator h2":
+            "interestCalculator",
+
+        "#interestCalculator .calculator-heading p":
+            "interestDesc",
+
+        "#fdCalculator h2":
+            "fdCalculator",
+
+        "#fdCalculator .calculator-heading p":
+            "fdDesc",
+
+        "#rdCalculator h2":
+            "rdCalculator",
+
+        "#rdCalculator .calculator-heading p":
+            "rdDesc",
+
+        "#emiCalculator h2":
+            "emiCalculator",
+
+        "#emiCalculator .calculator-heading p":
+            "emiDesc",
+
+        "label[for='principal']":
+            "principal",
+
+        "label[for='rate']":
+            "interestRate",
+
+        "label[for='time']":
+            "period",
+
+        "label[for='interestType']":
+            "interestType",
+
+        "label[for='compoundFrequency']":
+            "compoundingFrequency",
+
+        "label[for='fdPrincipal']":
+            "depositAmount",
+
+        "label[for='fdRate']":
+            "interestRate",
+
+        "label[for='fdTime']":
+            "period",
+
+        "label[for='fdFrequency']":
+            "compoundingFrequency",
+
+        "label[for='rdMonthlyDeposit']":
+            "monthlyDeposit",
+
+        "label[for='rdRate']":
+            "interestRate",
+
+        "label[for='rdTime']":
+            "period",
+
+        "label[for='loanAmount']":
+            "loanAmount",
+
+        "label[for='loanRate']":
+            "interestRate",
+
+        "label[for='loanTenure']":
+            "tenure",
+
+        "#interestCalculator .primary-button":
+            "calculate",
+
+        "#interestCalculator .reset-button":
+            "reset",
+
+        "#fdCalculator .primary-button":
+            "calculate",
+
+        "#fdCalculator .reset-button":
+            "reset",
+
+        "#rdCalculator .primary-button":
+            "calculate",
+
+        "#rdCalculator .reset-button":
+            "reset",
+
+        "#emiCalculator .primary-button":
+            "calculate",
+
+        "#emiCalculator .reset-button":
+            "reset"
+
+    };
+
+
+    Object.entries(
+        textMap
+    ).forEach(
+        function (
+            [selector, key]
+        ) {
+
+            document
+                .querySelectorAll(
+                    selector
+                )
+                .forEach(
+                    function (element) {
+
+                        element.textContent =
+                            t(key);
+
+                    }
+                );
+
+        }
+    );
+
+
+    const placeholders = {
+
+        principal:
+            "enterAmount",
+
+        rate:
+            "enterInterestRate",
+
+        time:
+            "enterPeriod",
+
+        fdPrincipal:
+            "enterDeposit",
+
+        fdRate:
+            "enterInterestRate",
+
+        fdTime:
+            "enterPeriod",
+
+        rdMonthlyDeposit:
+            "enterDeposit",
+
+        rdRate:
+            "enterInterestRate",
+
+        rdTime:
+            "enterPeriod",
+
+        loanAmount:
+            "enterLoanAmount",
+
+        loanRate:
+            "enterInterestRate",
+
+        loanTenure:
+            "enterTenure"
+
+    };
+
+
+    Object.entries(
+        placeholders
+    ).forEach(
+        function (
+            [id, key]
+        ) {
+
+            const element =
+                document.getElementById(id);
+
+
+            if (element) {
+
+                element.placeholder =
+                    t(key);
+
+            }
+
+        }
+    );
+
+
+    const options = {
+
+        timeUnit: [
+
+            ["years", "years"],
+            ["months", "months"]
+
+        ],
+
+        loanTenureUnit: [
+
+            ["years", "years"],
+            ["months", "months"]
+
+        ],
+
+        interestType: [
+
+            ["simple", "simpleInterest"],
+            ["compound", "compoundInterest"]
+
+        ],
+
+        compoundFrequency: [
+
+            ["1", "annually"],
+            ["2", "halfYearly"],
+            ["4", "quarterly"],
+            ["12", "monthly"]
+
+        ],
+
+        fdFrequency: [
+
+            ["1", "annually"],
+            ["2", "halfYearly"],
+            ["4", "quarterly"],
+            ["12", "monthly"]
+
+        ]
+
+    };
+
+
+    Object.entries(
+        options
+    ).forEach(
+        function (
+            [id, items]
+        ) {
+
+            const select =
+                document.getElementById(id);
+
+
+            if (!select) {
+                return;
+            }
+
+
+            items.forEach(
+                function (
+                    [value, key]
+                ) {
+
+                    const option =
+                        select.querySelector(
+                            `option[value="${value}"]`
+                        );
+
+
+                    if (option) {
+
+                        option.textContent =
+                            t(key);
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    updateActionButtonText();
+
+
+    refreshCurrentAnalysis();
+}
+
+
+function refreshCurrentAnalysis() {
+
+    if (
+        document.getElementById(
+            "interestResult"
+        )?.textContent &&
+        document.getElementById(
+            "interestResult"
+        )?.textContent !== "₹0.00"
+    ) {
+
+        calculateInterest();
+
+    }
+
+
+    if (
+        document.getElementById(
+            "fdTotalResult"
+        )?.textContent &&
+        document.getElementById(
+            "fdTotalResult"
+        )?.textContent !== "₹0.00"
+    ) {
+
+        calculateFD();
+
+    }
+
+
+    if (
+        document.getElementById(
+            "rdTotalResult"
+        )?.textContent &&
+        document.getElementById(
+            "rdTotalResult"
+        )?.textContent !== "₹0.00"
+    ) {
+
+        calculateRD();
+
+    }
+
+
+    if (
+        document.getElementById(
+            "emiResult"
+        )?.textContent &&
+        document.getElementById(
+            "emiResult"
+        )?.textContent !== "₹0.00"
+    ) {
+
+        calculateEMI();
+
+    }
+
+}
+
+
+function setupLanguage() {
+
+    const select =
+        document.getElementById(
+            "languageSelect"
+        );
+
+
+    if (!select) {
         return;
     }
 
-    const calculatorClone =
-        activeCalculator.cloneNode(true);
 
-    // Remove buttons from PDF
-    calculatorClone
-        .querySelectorAll("button")
-        .forEach(function (button) {
-            button.remove();
-        });
+    select.addEventListener(
+        "change",
+        function () {
 
-    // Remove action areas if present
-    calculatorClone
-        .querySelectorAll(
-            ".action-buttons, .result-actions, .finance-action-buttons"
-        )
-        .forEach(function (element) {
-            element.remove();
-        });
+            currentLanguage =
+                select.value === "te"
+                    ? "te"
+                    : "en";
+
+
+            localStorage.setItem(
+                "financeCalculatorLanguage",
+                currentLanguage
+            );
+
+
+            applyLanguage();
+
+        }
+    );
+
+
+    applyLanguage();
+}
+
+
+// ============================================================
+// PDF
+// ============================================================
+
+function downloadPDF(type) {
+
+    const calculator =
+        document.getElementById(
+            type + "Calculator"
+        );
+
+
+    if (!calculator) {
+
+        alert(
+            t("calculatorNotFound")
+        );
+
+        return;
+    }
+
 
     const printWindow =
         window.open(
@@ -3484,25 +4035,86 @@ function saveCalculatorAsPDF() {
             "width=900,height=700"
         );
 
+
     if (!printWindow) {
+
         alert(
-            "Please allow pop-ups for this Finance App to save the PDF."
+            t("popup")
         );
+
         return;
     }
 
+
+    const clone =
+        calculator.cloneNode(
+            true
+        );
+
+
+    clone
+        .querySelectorAll(
+            "button"
+        )
+        .forEach(
+            function (button) {
+
+                button.remove();
+
+            }
+        );
+
+
+    clone
+        .querySelectorAll(
+            ".finance-action-buttons"
+        )
+        .forEach(
+            function (element) {
+
+                element.remove();
+
+            }
+        );
+
+
+    const titles = {
+
+        interest:
+            t("interestCalculator"),
+
+        fd:
+            t("fdCalculator"),
+
+        rd:
+            t("rdCalculator"),
+
+        emi:
+            t("emiCalculator")
+
+    };
+
+
+    const title =
+        titles[type];
+
+
     printWindow.document.open();
 
+
     printWindow.document.write(`
+
 <!DOCTYPE html>
 
-<html>
+<html lang="${currentLanguage}">
 
 <head>
 
 <meta charset="UTF-8">
 
-<title>Finance Calculator Result</title>
+<title>
+${title}
+</title>
 
 <style>
 
@@ -3511,316 +4123,175 @@ function saveCalculatorAsPDF() {
 }
 
 body {
-    margin: 0;
-    padding: 30px;
 
     font-family:
         Arial,
         Helvetica,
         sans-serif;
 
-    background: #ffffff;
+    margin: 0;
 
-    color: #111827;
+    padding: 30px;
+
+    color:
+        #111827;
+
+    background:
+        #ffffff;
 }
 
 .pdf-container {
-    width: 100%;
-    max-width: 750px;
 
-    margin: 0 auto;
+    width: 100%;
+
+    max-width:
+        850px;
+
+    margin:
+        0 auto;
 }
 
 .pdf-header {
-    text-align: center;
 
-    margin-bottom: 25px;
+    text-align:
+        center;
 
     border-bottom:
         2px solid #2563eb;
 
-    padding-bottom: 15px;
+    padding-bottom:
+        15px;
+
+    margin-bottom:
+        20px;
 }
 
 .pdf-header h1 {
-    margin: 0;
 
-    color: #2563eb;
+    margin:
+        0 0 8px;
 
-    font-size: 25px;
+    font-size:
+        24px;
 }
 
-.pdf-header p {
-    margin: 5px 0 0;
+.pdf-header h2 {
 
-    color: #64748b;
+    margin:
+        0;
 
-    font-size: 12px;
+    font-size:
+        18px;
+
+    font-weight:
+        normal;
 }
 
-.calculator-card {
-    width: 100%;
+.pdf-date {
 
-    padding: 20px;
+    margin-top:
+        8px;
+
+    font-size:
+        12px;
+
+    color:
+        #666666;
+}
+
+.result-card {
 
     border:
         1px solid #dbe3ec;
 
-    border-radius: 12px;
-
-    background: #ffffff;
-}
-
-.calculator-card h2 {
-    margin:
-        0 0 5px;
-
-    font-size: 21px;
-
-    color: #111827;
-}
-
-.calculator-card h3 {
-    margin:
-        0 0 18px;
-
-    font-size: 12px;
-
-    color: #64748b;
-}
-
-.form-group {
-    margin-bottom: 12px;
-}
-
-.form-group label {
-    display: block;
-
-    margin-bottom: 5px;
-
-    font-size: 11px;
-
-    font-weight: 600;
-
-    color: #334155;
-}
-
-input,
-select {
-    width: 100%;
-
-    height: 36px;
+    border-radius:
+        8px;
 
     padding:
-        0 9px;
+        15px;
 
-    border:
-        1px solid #cbd5e1;
+    margin-bottom:
+        18px;
 
-    border-radius: 6px;
-
-    font-size: 12px;
-
-    background: #f8fafc;
-
-    color: #111827;
-}
-
-input {
-    display: block;
-}
-
-.result-card {
-    margin-top: 18px;
-
-    padding: 15px;
-
-    border:
-        1px solid #cbd5e1;
-
-    border-radius: 9px;
-
-    background: #eff6ff;
-}
-
-.result-card h3 {
-    margin:
-        0 0 10px;
-
-    color: #111827;
-
-    font-size: 15px;
+    background:
+        #eff6ff;
 }
 
 .result-row {
-    display: flex;
+
+    display:
+        flex;
 
     justify-content:
         space-between;
 
-    align-items: center;
+    gap:
+        20px;
 
     padding:
-        8px 0;
+        7px 0;
 
     border-bottom:
-        1px solid #dbeafe;
-
-    gap: 20px;
-}
-
-.result-row:last-child {
-    border-bottom: none;
-}
-
-.result-label {
-    color: #64748b;
-
-    font-size: 11px;
-}
-
-.result-value {
-    color: #111827;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-    text-align: right;
-}
-
-.analysis-card,
-.analysis-section,
-.interest-analysis {
-    margin-top: 18px;
-
-    padding: 15px;
-
-    border:
-        1px solid #cbd5e1;
-
-    border-radius: 9px;
-
-    background: #f8fafc;
-}
-
-.analysis-card h3,
-.analysis-section h3,
-.interest-analysis h3 {
-    margin:
-        0 0 10px;
-
-    font-size: 14px;
-
-    color: #111827;
-}
-
-.analysis-summary {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 8px;
-}
-
-.analysis-summary > div {
-    padding: 9px;
-
-    border:
-        1px solid #dbe3ec;
-
-    border-radius: 6px;
-
-    background: #ffffff;
-}
-
-.analysis-summary small {
-    display: block;
-
-    color: #64748b;
-
-    font-size: 9px;
-}
-
-.analysis-summary strong {
-    color: #111827;
-
-    font-size: 11px;
+        1px solid #dddddd;
 }
 
 .analysis-table {
-    width: 100%;
+
+    width:
+        100%;
 
     border-collapse:
         collapse;
 
-    margin-top: 10px;
-
-    font-size: 10px;
+    margin-top:
+        10px;
 }
 
 .analysis-table th,
 .analysis-table td {
-    padding: 7px;
 
-    border-bottom:
-        1px solid #dbe3ec;
+    border:
+        1px solid #cccccc;
 
-    text-align: right;
+    padding:
+        8px;
+
+    text-align:
+        right;
 }
 
 .analysis-table th {
-    background: #e2e8f0;
 
-    color: #334155;
-}
-
-.analysis-note {
-    margin-top: 10px;
-
-    font-size: 9px;
-
-    color: #64748b;
-}
-
-.chart-container,
-.chart-wrapper {
-    max-width: 100%;
-}
-
-canvas {
-    max-width: 100% !important;
+    background:
+        #f3f4f6;
 }
 
 .pdf-footer {
-    margin-top: 25px;
 
-    padding-top: 12px;
+    text-align:
+        center;
+
+    margin-top:
+        30px;
+
+    padding-top:
+        15px;
 
     border-top:
-        1px solid #e2e8f0;
+        1px solid #dddddd;
 
-    text-align: center;
+    font-size:
+        12px;
 
-    color: #64748b;
-
-    font-size: 10px;
+    color:
+        #666666;
 }
 
 @media print {
 
     body {
-        padding: 15px;
-    }
-
-    .calculator-card {
-        box-shadow: none;
-    }
-
-    @page {
-        size: A4;
-        margin: 15mm;
+        padding:
+            10px;
     }
 
 }
@@ -3835,99 +4306,93 @@ canvas {
 
     <div class="pdf-header">
 
-        <h1>Finance App</h1>
+        <h1>
+            Finance App by Surendra
+        </h1>
 
-        <p>Financial Calculation Report</p>
+        <h2>
+            ${title}
+        </h2>
+
+        <div class="pdf-date">
+
+            ${t("generated")}:
+            ${new Date().toLocaleString("en-IN")}
+
+        </div>
 
     </div>
 
-    ${calculatorClone.outerHTML}
+
+    ${clone.outerHTML}
+
 
     <div class="pdf-footer">
 
-        Finance App by Surendra
+        ${t("calculatedUsing")}
 
     </div>
 
 </div>
 
+
 <script>
 
-window.onload = function () {
-
-    setTimeout(function () {
-
+setTimeout(
+    function () {
         window.print();
+    },
+    500
+);
 
-    }, 500);
+window.onafterprint =
+    function () {
 
-};
+        setTimeout(
+            function () {
+                window.close();
+            },
+            300
+        );
 
-window.onafterprint = function () {
-
-    setTimeout(function () {
-
-        window.close();
-
-    }, 300);
-
-};
+    };
 
 <\/script>
 
 </body>
 
 </html>
-`);
+
+    `);
+
 
     printWindow.document.close();
 }
 
 
-// ==========================================================
-// CONNECT SAVE PDF BUTTON
-// ==========================================================
+// ============================================================
+// STARTUP
+// ============================================================
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
 
-        const buttons =
-            document.querySelectorAll(
-                "button"
-            );
+        loadTheme();
 
-        buttons.forEach(
-            function (button) {
+        loadSavedValues();
 
-                const text =
-                    button.textContent
-                        .trim()
-                        .toLowerCase();
+        setupTabs();
 
-                if (
-                    text.includes("save pdf")
-                ) {
+        setupEnterKey();
 
-                    button.addEventListener(
-                        "click",
-                        function (event) {
+        setupActionButtons();
 
-                            event.preventDefault();
+        setupLanguage();
 
-                            saveCalculatorAsPDF();
-
-                        }
-                    );
-
-                }
-
-            }
+        showCalculator(
+            "interest"
         );
 
     }
 );
-
-// ============================================================
-// END
-// ============================================================

@@ -44,15 +44,27 @@
             </div>
 
 
-            <button
-                id="themeToggle"
-                class="theme-toggle"
-                type="button"
-                aria-label="Toggle dark mode">
+            <div class="header-actions">
 
-                🌙
+                <label class="language-switcher" for="languageSelect">
+                    <span class="language-icon">🌐</span>
+                    <select id="languageSelect" aria-label="Select language">
+                        <option value="en">English</option>
+                        <option value="te">తెలుగు</option>
+                    </select>
+                </label>
 
-            </button>
+                <button
+                    id="themeToggle"
+                    class="theme-toggle"
+                    type="button"
+                    aria-label="Toggle dark mode">
+
+                    🌙
+
+                </button>
+
+            </div>
 
         </header>
 
@@ -794,6 +806,27 @@
 
 
     <script src="script.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(function (registration) {
+                console.log(
+                    "Service Worker registered:",
+                    registration.scope
+                );
+            })
+            .catch(function (error) {
+                console.error(
+                    "Service Worker registration failed:",
+                    error
+                );
+            });
+    });
+}
+</script>
 
 </body>
 
